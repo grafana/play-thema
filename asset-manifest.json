@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/play-thema/static/css/main.073c9b0a.css",
+    "main.js": "/play-thema/static/js/main.6d493f69.js",
+    "static/js/787.c1112931.chunk.js": "/play-thema/static/js/787.c1112931.chunk.js",
+    "index.html": "/play-thema/index.html",
+    "main.073c9b0a.css.map": "/play-thema/static/css/main.073c9b0a.css.map",
+    "main.6d493f69.js.map": "/play-thema/static/js/main.6d493f69.js.map",
+    "787.c1112931.chunk.js.map": "/play-thema/static/js/787.c1112931.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.073c9b0a.css",
+    "static/js/main.6d493f69.js"
+  ]
+}
