@@ -1,7 +1,8 @@
 {
   "name": "app",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
+  "homepage": "/play-thema",
   "dependencies": {
     "@monaco-editor/react": "^4.4.6",
     "@testing-library/jest-dom": "^5.14.1",
