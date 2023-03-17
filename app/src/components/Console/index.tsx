@@ -27,7 +27,7 @@ const Console = () => {
         })
     });
 
-    return <Terminal name='Console' colorMode={color}>
+    return <Terminal height='' name='Console' colorMode={color}>
         <TerminalOutput>~~~~~~ Standard Error ~~~~~~ </TerminalOutput>
         {input.stderr.length > 0 ? input.stderr : <TerminalOutput/>}
         <TerminalOutput>~~~~~~ Standard Output ~~~~~~ </TerminalOutput>
