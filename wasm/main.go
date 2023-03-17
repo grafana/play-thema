@@ -15,7 +15,7 @@ import (
 	"github.com/grafana/thema/load"
 	"github.com/grafana/thema/vmux"
 	"github.com/liamg/memoryfs"
-	yaml "gopkg.in/yaml.v3"
+	"gopkg.in/yaml.v3"
 )
 
 const (
@@ -39,7 +39,7 @@ func main() {
 	<-make(chan bool)
 }
 
-func runValidateVersion(this js.Value, args []js.Value) any {
+func runValidateVersion(_ js.Value, args []js.Value) any {
 	lineage := args[0].String()
 	inputData := args[1].String()
 	version := args[2].String()
@@ -61,7 +61,7 @@ func runValidateVersion(this js.Value, args []js.Value) any {
 	return toResult(validateVersion(lin, datval, version))
 }
 
-func runValidateAny(this js.Value, args []js.Value) any {
+func runValidateAny(_ js.Value, args []js.Value) any {
 	lineage := args[0].String()
 	inputData := args[1].String()
 
@@ -83,7 +83,7 @@ func runValidateAny(this js.Value, args []js.Value) any {
 
 }
 
-func runTranslateToLatest(this js.Value, args []js.Value) any {
+func runTranslateToLatest(_ js.Value, args []js.Value) any {
 	lineage := args[0].String()
 	inputData := args[1].String()
 
@@ -104,7 +104,7 @@ func runTranslateToLatest(this js.Value, args []js.Value) any {
 	return toResult(translateVersion(lin, datval, latestVersion, inpFormat))
 }
 
-func runTranslateVersion(this js.Value, args []js.Value) any {
+func runTranslateVersion(_ js.Value, args []js.Value) any {
 	lineage := args[0].String()
 	inputData := args[1].String()
 	version := args[2].String()
@@ -126,7 +126,7 @@ func runTranslateVersion(this js.Value, args []js.Value) any {
 	return toResult(translateVersion(lin, datval, version, inpFormat))
 }
 
-func runGetLineageVersions(this js.Value, args []js.Value) any {
+func runGetLineageVersions(_ js.Value, args []js.Value) any {
 	lineage := args[0].String()
 
 	if lineage == "" {
@@ -141,7 +141,7 @@ func runGetLineageVersions(this js.Value, args []js.Value) any {
 	return toResult(lineageVersions(lin))
 }
 
-func runFormat(this js.Value, args []js.Value) any {
+func runFormat(_ js.Value, args []js.Value) any {
 	lineage := args[0].String()
 
 	if lineage == "" {

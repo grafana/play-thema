@@ -1,4 +1,5 @@
 import {publish} from '../terminal';
+import {fmtJson, fmtYaml} from "../format";
 
 export const Format = (lineage: string): string => {
     // @ts-ignore
@@ -61,7 +62,7 @@ export const TranslateToLatest = (lineage: string, input: string): void => {
 
 export const TranslateToVersion = (lineage: string, input: string, version: string): void => {
     // @ts-ignore
-    const res = translateToLatest(lineage, input);
+    const res = translateToVersion(lineage, input, version);
     if (res.error !== '') {
         publish({stderr: `'TranslateToVersion' failed: ${res.error}`});
         return
@@ -72,12 +73,27 @@ export const TranslateToVersion = (lineage: string, input: string, version: stri
 const translateResultToString = (res: string): string => {
     const data = JSON.parse(res)
 
-    return `From: ${data.from}
-To: ${data.to}
+    return `Translation result:
+    
+From: ${data.from}
+To:   ${data.to}
         
 Result:        
-${JSON.stringify(data.result, null, "\t")}
+
+${fmtTranslateResult(data.result, data.fmt)}
         
 Lacunas:  
-${JSON.stringify(data.lacunas, null, "\t")}`;
+
+${fmtTranslateResult(data.lacunas, data.fmt)}`;
+}
+
+const fmtTranslateResult = (result: string, fmt: string): string => {
+    switch (fmt) {
+        case "json":
+            return fmtJson(result);
+        case "yaml":
+            return fmtYaml(result);
+        default:
+            return result;
+    }
 }
