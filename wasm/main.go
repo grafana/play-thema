@@ -7,14 +7,21 @@ import (
 	"strings"
 	"syscall/js"
 
-	"github.com/grafana/thema"
-	"github.com/grafana/thema/load"
-	"github.com/grafana/thema/vmux"
-
 	"cuelang.org/go/cue"
 	"cuelang.org/go/cue/cuecontext"
 	"cuelang.org/go/cue/format"
+	cueyaml "cuelang.org/go/encoding/yaml"
+	"github.com/grafana/thema"
+	"github.com/grafana/thema/load"
+	"github.com/grafana/thema/vmux"
 	"github.com/liamg/memoryfs"
+	yaml "gopkg.in/yaml.v3"
+)
+
+const (
+	yamlFmt       = "yaml"
+	jsonFmt       = "json"
+	latestVersion = "latest"
 )
 
 var rt = thema.NewRuntime(cuecontext.New())
@@ -34,14 +41,14 @@ func main() {
 
 func runValidateVersion(this js.Value, args []js.Value) any {
 	lineage := args[0].String()
-	inputJSON := args[1].String()
+	inputData := args[1].String()
 	version := args[2].String()
 
-	if lineage == "" || inputJSON == "" || version == "" {
+	if lineage == "" || inputData == "" || version == "" {
 		return toResult("", errors.New("lineage, input JSON or version is missing"))
 	}
 
-	datval, err := decodeData(inputJSON)
+	_, datval, err := decodeData(inputData)
 	if err != nil {
 		return toResult("", err)
 	}
@@ -54,15 +61,15 @@ func runValidateVersion(this js.Value, args []js.Value) any {
 	return toResult(validateVersion(lin, datval, version))
 }
 
-func runValidateAny(his js.Value, args []js.Value) any {
+func runValidateAny(this js.Value, args []js.Value) any {
 	lineage := args[0].String()
-	inputJSON := args[1].String()
+	inputData := args[1].String()
 
-	if lineage == "" || inputJSON == "" {
+	if lineage == "" || inputData == "" {
 		return toResult("", errors.New("lineage or input JSON is missing"))
 	}
 
-	datval, err := decodeData(inputJSON)
+	_, datval, err := decodeData(inputData)
 	if err != nil {
 		return toResult("", err)
 	}
@@ -73,17 +80,18 @@ func runValidateAny(his js.Value, args []js.Value) any {
 	}
 
 	return toResult(validateAny(lin, datval))
+
 }
 
 func runTranslateToLatest(this js.Value, args []js.Value) any {
 	lineage := args[0].String()
-	inputJSON := args[1].String()
+	inputData := args[1].String()
 
-	if lineage == "" || inputJSON == "" {
+	if lineage == "" || inputData == "" {
 		return toResult("", errors.New("lineage or input JSON is missing"))
 	}
 
-	datval, err := decodeData(inputJSON)
+	inpFormat, datval, err := decodeData(inputData)
 	if err != nil {
 		return toResult("", err)
 	}
@@ -93,19 +101,19 @@ func runTranslateToLatest(this js.Value, args []js.Value) any {
 		return toResult("", err)
 	}
 
-	return toResult(translateVersion(lin, datval, latestVersion))
+	return toResult(translateVersion(lin, datval, latestVersion, inpFormat))
 }
 
 func runTranslateVersion(this js.Value, args []js.Value) any {
 	lineage := args[0].String()
-	inputJSON := args[1].String()
+	inputData := args[1].String()
 	version := args[2].String()
 
-	if lineage == "" || inputJSON == "" || version == "" {
+	if lineage == "" || inputData == "" || version == "" {
 		return toResult("", errors.New("lineage, input JSON or version is missing"))
 	}
 
-	datval, err := decodeData(inputJSON)
+	inpFormat, datval, err := decodeData(inputData)
 	if err != nil {
 		return toResult("", err)
 	}
@@ -115,7 +123,7 @@ func runTranslateVersion(this js.Value, args []js.Value) any {
 		return toResult("", err)
 	}
 
-	return toResult(translateVersion(lin, datval, version))
+	return toResult(translateVersion(lin, datval, version, inpFormat))
 }
 
 func runGetLineageVersions(this js.Value, args []js.Value) any {
@@ -198,20 +206,27 @@ func loadLineage(lineage string) (thema.Lineage, error) {
 	return lin, nil
 }
 
-func decodeData(inputJSON string) (cue.Value, error) {
-	if inputJSON == "" {
-		return cue.Value{}, errors.New("data is missing")
+func decodeData(inputData string) (string, cue.Value, error) {
+	if inputData == "" {
+		return "", cue.Value{}, errors.New("data is missing")
 	}
 
 	jd := vmux.NewJSONCodec("stdin")
-	datval, err := jd.Decode(rt.Underlying().Context(), []byte(inputJSON))
-	if err != nil {
-		return cue.Value{}, fmt.Errorf("failed to decode input data: %w", err)
-	}
-	return datval, nil
-}
+	yd := vmux.NewYAMLCodec("stdin")
 
-const latestVersion = "latest"
+	// Guessing the input format, return the first one that does not fail
+	datval, err := jd.Decode(rt.Underlying().Context(), []byte(inputData))
+	if err == nil {
+		return jsonFmt, datval, nil
+	}
+
+	datval, err = yd.Decode(rt.Underlying().Context(), []byte(inputData))
+	if err == nil {
+		return yamlFmt, datval, nil
+	}
+
+	return "", cue.Value{}, fmt.Errorf("failed to decode input data: %w", err)
+}
 
 func validateVersion(lin thema.Lineage, datval cue.Value, version string) (string, error) {
 	if !datval.Exists() {
@@ -253,7 +268,7 @@ func validateAny(lin thema.Lineage, datval cue.Value) (string, error) {
 	return "", errors.New("input does not match any version")
 }
 
-func translateVersion(lin thema.Lineage, datval cue.Value, version string) (string, error) {
+func translateVersion(lin thema.Lineage, datval cue.Value, version string, format string) (string, error) {
 	if !datval.Exists() {
 		return "", errors.New("cue value does not exist")
 	}
@@ -292,26 +307,29 @@ func translateVersion(lin thema.Lineage, datval cue.Value, version string) (stri
 		return "", errors.New("translated value is not concrete (TODO print non-concrete fields)")
 	}
 
-	r := translationResult{
-		From:    inst.Schema().Version().String(),
-		To:      tinst.Schema().Version().String(),
-		Result:  tinst.Underlying(),
-		Lacunas: lac,
+	tr := translated{
+		from:    inst.Schema().Version().String(),
+		to:      tinst.Schema().Version().String(),
+		result:  tinst.Underlying(),
+		lacunas: lac,
 	}
 
-	byt, err := json.Marshal(r)
+	var result string
+	var err error
+	switch format {
+	case jsonFmt:
+		result, err = tr.jsonResult()
+	case yamlFmt:
+		result, err = tr.yamlResult()
+	default:
+		return "", errors.New("translation result can't be marshalled to unknown format")
+	}
+
 	if err != nil {
-		return "", fmt.Errorf("error marshaling translation result to JSON: %w", err)
+		return "", fmt.Errorf("error marshaling translation result to %s: %w", format, err)
 	}
 
-	return string(byt), nil
-}
-
-type translationResult struct {
-	From    string                   `json:"from"`
-	To      string                   `json:"to,omitempty"`
-	Result  cue.Value                `json:"result"`
-	Lacunas thema.TranslationLacunas `json:"lacunas"`
+	return result, nil
 }
 
 func lineageVersions(lin thema.Lineage) (string, error) {
@@ -333,4 +351,70 @@ func versions(sch thema.Schema, ver []string) []string {
 	ver = append(ver, sch.Version().String())
 
 	return versions(sch.Successor(), ver)
+}
+
+type translationResult struct {
+	From    string `json:"from" yaml:"from"`
+	To      string `json:"to,omitempty" yaml:"to,omitempty"`
+	Result  string `json:"result" yaml:"result"`
+	Lacunas string `json:"lacunas" yaml:"lacunas"`
+}
+
+type translated struct {
+	from    string                   `json:"from"`
+	to      string                   `json:"to,omitempty"`
+	result  cue.Value                `json:"result"`
+	lacunas thema.TranslationLacunas `json:"lacunas"`
+}
+
+func (t translated) yamlResult() (string, error) {
+	cueStr, err := cueyaml.Encode(t.result)
+	if err != nil {
+		return "", err
+	}
+
+	lac, err := yaml.Marshal(t.lacunas)
+	if err != nil {
+		return "", err
+	}
+
+	tr := translationResult{
+		From:    t.from,
+		To:      t.from,
+		Result:  string(cueStr),
+		Lacunas: string(lac),
+	}
+
+	result, err := json.MarshalIndent(tr, "", "  ")
+	if err != nil {
+		return "", err
+	}
+
+	return string(result), nil
+}
+
+func (t translated) jsonResult() (string, error) {
+	cueStr, err := json.MarshalIndent(t.result, "", "  ")
+	if err != nil {
+		return "", err
+	}
+
+	lac, err := json.MarshalIndent(t.lacunas, "", "  ")
+	if err != nil {
+		return "", err
+	}
+
+	tr := translationResult{
+		From:    t.from,
+		To:      t.from,
+		Result:  string(cueStr),
+		Lacunas: string(lac),
+	}
+
+	result, err := json.MarshalIndent(tr, "", "  ")
+	if err != nil {
+		return "", err
+	}
+
+	return string(result), nil
 }
