@@ -23,7 +23,7 @@ root.render(
 // Now load and run the Go code which will register the Wasm API
 const go: Go = new Go();
 
-const sourceFile = 'play-thema/thema.wasm';
+const sourceFile = 'thema.wasm';
 
 // WebAssembly.instantiateStreaming() is preferred, but not all browsers support it
 if (typeof WebAssembly.instantiateStreaming === 'function') {
