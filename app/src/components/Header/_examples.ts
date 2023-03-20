@@ -44,7 +44,7 @@ seqs: [
 ]`,
     input: `{
     "firstfield": "value",
-    "secondfield": "100"
+    "secondfield": 100
 }`
 }
 
