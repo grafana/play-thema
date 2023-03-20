@@ -1,5 +1,5 @@
 import Dropdown from './Dropdown';
-import {basic, lenses, multi} from './_examples';
+import {basic, lacunas, lenses, multi} from './_examples';
 import {CSSProperties, useContext, useEffect, useState} from 'react';
 import {StateContext} from '../../state';
 
@@ -23,6 +23,7 @@ const Examples = ({style}: Props) => {
         'Basic example': basic,
         'Multiple versions': multi,
         'With lenses': lenses,
+        'With lacunas': lacunas,
     }
     const [example, setExample] = useState<string>(Object.keys(examples)[0]);
 
