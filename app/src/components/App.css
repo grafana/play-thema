@@ -58,7 +58,7 @@ body {
 
 .react-terminal-input {
   margin-bottom: 20px;
-  overflow: hidden;
+  overflow: scroll;
   white-space: nowrap;
   -webkit-animation: typing 2s steps(180, end);
   animation: typing 2s steps(180, end);
