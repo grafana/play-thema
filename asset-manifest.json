@@ -1,16 +1,14 @@
 {
   "files": {
     "main.css": "/play-thema/static/css/main.7781e727.css",
-    "main.js": "/play-thema/static/js/main.03be7e4c.js",
-    "static/js/787.375efcd9.chunk.js": "/play-thema/static/js/787.375efcd9.chunk.js",
+    "main.js": "/play-thema/static/js/main.f8bad9b4.js",
     "static/media/grafana.svg": "/play-thema/static/media/grafana.1e0deb6bbbca4c0f06ab.svg",
     "index.html": "/play-thema/index.html",
     "main.7781e727.css.map": "/play-thema/static/css/main.7781e727.css.map",
-    "main.03be7e4c.js.map": "/play-thema/static/js/main.03be7e4c.js.map",
-    "787.375efcd9.chunk.js.map": "/play-thema/static/js/787.375efcd9.chunk.js.map"
+    "main.f8bad9b4.js.map": "/play-thema/static/js/main.f8bad9b4.js.map"
   },
   "entrypoints": [
     "static/css/main.7781e727.css",
-    "static/js/main.03be7e4c.js"
+    "static/js/main.f8bad9b4.js"
   ]
 }
