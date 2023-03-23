@@ -15,11 +15,10 @@ jobs:
 
       - name: Install and Build 🔧
         run: |
-          cd app
           yarn install --immutable
           yarn build
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: app/build
+          folder: build
