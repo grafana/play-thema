@@ -1,5 +1,5 @@
 export const basic = {
-    lineage: `package ship
+  lineage: `package ship
 
 import "github.com/grafana/thema"
 thema.#Lineage
@@ -15,13 +15,13 @@ seqs: [
         ]
     },
 ]`,
-    input: `{
+  input: `{
     "firstfield": "value"
-}`
-}
+}`,
+};
 
 export const multi = {
-    lineage: `package ship
+  lineage: `package ship
 
 import "github.com/grafana/thema"
 thema.#Lineage
@@ -42,14 +42,14 @@ seqs: [
         ]
     },
 ]`,
-    input: `{
+  input: `{
     "firstfield": "value",
     "secondfield": "100"
-}`
-}
+}`,
+};
 
 export const lenses = {
-    lineage: `package ship
+  lineage: `package ship
 
 import "github.com/grafana/thema"
 thema.#Lineage
@@ -93,7 +93,7 @@ seqs: [
         }
     }
 ]`,
-    input: `{
+  input: `{
     "firstfield": "value"
-}`
-}
+}`,
+};
