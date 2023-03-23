@@ -10,7 +10,8 @@
     "nanoid": "4.0.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-terminal-ui": "1.0.1"
+    "react-terminal-ui": "1.0.1",
+    "react-scripts": "5.0.1"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "5.14.1",
@@ -21,7 +22,6 @@
     "@types/node": "16.7.13",
     "@types/react-dom": "18.0.0",
     "prettier": "^2.8.6",
-    "react-scripts": "5.0.1",
     "typescript": "5.0.2"
   },
   "scripts": {
