@@ -1,7 +1,7 @@
-import React, { useContext, useRef } from "react";
-import * as monaco from "monaco-editor";
-import Editor, { Monaco } from "@monaco-editor/react";
-import { Theme, ThemeContext } from "../../theme";
+import React, { useContext, useRef } from 'react';
+import * as monaco from 'monaco-editor';
+import Editor, { Monaco } from '@monaco-editor/react';
+import { Theme, ThemeContext } from '../../theme';
 
 interface Props {
   value: string;
@@ -16,30 +16,27 @@ const CodeEditor = ({ value, onChange, isReadOnly, language }: Props) => {
   const monacoRef = useRef<null | Monaco>(null);
 
   const { theme } = useContext(ThemeContext);
-  const editorTheme = theme === Theme.dark ? "thema-dark" : "thema-light";
+  const editorTheme = theme === Theme.dark ? 'thema-dark' : 'thema-light';
 
-  const handleEditorDidMount = (
-    editor: monaco.editor.IStandaloneCodeEditor,
-    monaco: Monaco
-  ) => {
+  const handleEditorDidMount = (editor: monaco.editor.IStandaloneCodeEditor, monaco: Monaco) => {
     editorRef.current = editor;
     monacoRef.current = monaco;
 
-    monaco.editor.defineTheme("thema-dark", {
-      base: "vs-dark",
+    monaco.editor.defineTheme('thema-dark', {
+      base: 'vs-dark',
       inherit: true,
       rules: [],
       colors: {
-        "editor.background": "#191b1f",
+        'editor.background': '#191b1f',
       },
     });
 
-    monaco.editor.defineTheme("thema-light", {
-      base: "vs",
+    monaco.editor.defineTheme('thema-light', {
+      base: 'vs',
       inherit: true,
       rules: [],
       colors: {
-        "editor.background": "#ffffff",
+        'editor.background': '#ffffff',
       },
     });
 
@@ -50,14 +47,14 @@ const CodeEditor = ({ value, onChange, isReadOnly, language }: Props) => {
     fontSize: 15,
     minimap: { enabled: false },
     scrollbar: {
-      vertical: "hidden",
-      horizontal: "hidden",
+      vertical: 'hidden',
+      horizontal: 'hidden',
     },
   };
 
   const readOnlyOpts: monaco.editor.IStandaloneEditorConstructionOptions = {
     readOnly: true,
-    lineNumbers: "off",
+    lineNumbers: 'off',
   };
 
   const opts = isReadOnly ? { ...defaultOpts, ...readOnlyOpts } : defaultOpts;

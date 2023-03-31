@@ -1,14 +1,14 @@
-import Dropdown from "./Dropdown";
-import { basic, lenses, multi } from "./_examples";
-import { CSSProperties, useContext, useEffect, useState } from "react";
-import { StateContext } from "../../state";
+import Dropdown from './Dropdown';
+import { basic, lenses, multi } from './_examples';
+import { CSSProperties, useContext, useEffect, useState } from 'react';
+import { StateContext } from '../../state';
 
 const styles: { [name: string]: CSSProperties } = {
   dropdown: {
-    margin: "0 0",
-    minWidth: "180px",
-    borderRadius: "20px",
-    textAlign: "center" as const,
+    margin: '0 0',
+    minWidth: '180px',
+    borderRadius: '20px',
+    textAlign: 'center' as const,
   },
 };
 
@@ -20,9 +20,9 @@ const Examples = ({ style }: Props) => {
   const { setInput, setLineage } = useContext(StateContext);
 
   const examples: { [name: string]: { lineage: string; input: string } } = {
-    "Basic example": basic,
-    "Multiple versions": multi,
-    "With lenses": lenses,
+    'Basic example': basic,
+    'Multiple versions': multi,
+    'With lenses': lenses,
   };
   const [example, setExample] = useState<string>(Object.keys(examples)[0]);
 

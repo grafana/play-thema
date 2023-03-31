@@ -1,5 +1,5 @@
-import React, { CSSProperties, useContext } from "react";
-import { Theme, ThemeContext } from "../../theme";
+import React, { CSSProperties, useContext } from 'react';
+import { Theme, ThemeContext } from '../../theme';
 
 const IconMoon = () => (
   <svg viewBox="0 0 24 24" fill="currentColor" height="2.2em" width="2em">

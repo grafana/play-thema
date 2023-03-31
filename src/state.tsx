@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import React, { useReducer } from 'react';
 
 export interface State {
   input: string;
@@ -9,16 +9,16 @@ export interface State {
 }
 
 const initialState: State = {
-  input: "",
+  input: '',
   setInput: (_: string): void => {},
 
-  lineage: "",
+  lineage: '',
   setLineage: (_: string): void => {},
 };
 
 enum StateActionKind {
-  INPUT = "INPUT",
-  LINEAGE = "LINEAGE",
+  INPUT = 'INPUT',
+  LINEAGE = 'LINEAGE',
 }
 
 interface StateAction {
@@ -26,10 +26,7 @@ interface StateAction {
   payload: string;
 }
 
-const stateReducer = (
-  state: Partial<State>,
-  { type, payload }: StateAction
-): Partial<State> => {
+const stateReducer = (state: Partial<State>, { type, payload }: StateAction): Partial<State> => {
   if (type === StateActionKind.INPUT) {
     return { ...state, input: payload };
   }
@@ -41,27 +38,20 @@ const stateReducer = (
   return state;
 };
 
-export const StateContext: React.Context<State> =
-  React.createContext(initialState);
+export const StateContext: React.Context<State> = React.createContext(initialState);
 
 export const StateProvider = (props: React.PropsWithChildren) => {
   const [{ input, lineage }, dispatch] = useReducer(stateReducer, initialState);
 
-  const setInput = (input: string) =>
-    dispatch({ type: StateActionKind.INPUT, payload: input });
-  const setLineage = (lineage: string) =>
-    dispatch({ type: StateActionKind.LINEAGE, payload: lineage });
+  const setInput = (input: string) => dispatch({ type: StateActionKind.INPUT, payload: input });
+  const setLineage = (lineage: string) => dispatch({ type: StateActionKind.LINEAGE, payload: lineage });
 
   const state: State = {
-    input: input || "",
-    lineage: lineage || "",
+    input: input || '',
+    lineage: lineage || '',
     setInput,
     setLineage,
   };
 
-  return (
-    <StateContext.Provider value={state}>
-      {props.children}
-    </StateContext.Provider>
-  );
+  return <StateContext.Provider value={state}>{props.children}</StateContext.Provider>;
 };

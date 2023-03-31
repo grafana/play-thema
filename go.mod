@@ -6,7 +6,6 @@ require (
 	cuelang.org/go v0.5.0-beta.2
 	github.com/grafana/thema v0.0.0-20230302221249-6952e4a999b7
 	github.com/liamg/memoryfs v1.6.0
-	gopkg.in/yaml.v3 v3.0.1
 )
 
 require (
@@ -21,6 +20,7 @@ require (
 	github.com/yalue/merged_fs v1.2.2 // indirect
 	golang.org/x/net v0.2.0 // indirect
 	golang.org/x/text v0.4.0 // indirect
+	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
 
 replace cuelang.org/go => github.com/grafana/cue v0.0.0-20230316151919-3706ebd99331
