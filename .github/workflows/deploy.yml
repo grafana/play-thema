@@ -13,6 +13,11 @@ jobs:
       - name: Checkout 🛎️
         uses: actions/checkout@v3
 
+      - name: Set up Node ⚙️
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
       - name: Install and Build 🔧
         env:
           REACT_APP_FARO_URL: ${{ vars.FARO_URL }}
