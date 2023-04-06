@@ -1,4 +1,4 @@
-import React, { CSSProperties } from "react";
+import React, { CSSProperties } from 'react';
 
 interface Props {
   id: string;
@@ -9,8 +9,7 @@ interface Props {
 }
 
 const Dropdown = ({ id, options, onChange, style, disabled }: Props) => {
-  const onSelectChange = (evt: React.FormEvent<HTMLSelectElement>) =>
-    onChange(evt.currentTarget.value);
+  const onSelectChange = (evt: React.FormEvent<HTMLSelectElement>) => onChange(evt.currentTarget.value);
 
   return (
     <select style={style} onChange={onSelectChange} id={id} disabled={disabled}>

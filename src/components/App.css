@@ -69,10 +69,10 @@ body {
 
 @keyframes typing {
   from {
-    width: 0
+    width: 0;
   }
   to {
-    width: 100%
+    width: 100%;
   }
 }
 
@@ -92,7 +92,7 @@ body {
   display: inline-block;
   width: 20px;
   height: 20px;
-  content:"";
+  content: '';
   margin-right: 10px;
 }
 
@@ -118,11 +118,13 @@ select::-ms-expand {
   background-color: #f4f5f5;
 }
 
-.theme-dark h3, .theme-dark h4 {
+.theme-dark h3,
+.theme-dark h4 {
   color: rgb(204, 204, 220);
 }
 
-.theme-light h3, .theme-light h4 {
+.theme-light h3,
+.theme-light h4 {
   color: rgba(36, 41, 46, 0.75);
 }
 
@@ -143,7 +145,8 @@ select::-ms-expand {
   background-color: #ffffff;
 }
 
-.theme-dark select, .theme-dark input {
+.theme-dark select,
+.theme-dark input {
   color: rgb(204, 204, 220);
   background-color: #111217;
   border: 2px solid rgba(204, 204, 220, 0.15);

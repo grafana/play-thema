@@ -1,9 +1,9 @@
-import { publish } from "../terminal";
+import { publish } from '../terminal';
 
 export const Format = (lineage: string): string => {
   // @ts-ignore
   const res = format(lineage);
-  if (res.error !== "") {
+  if (res.error !== '') {
     throw new Error(res.error);
   }
   return res.result;
@@ -15,38 +15,34 @@ export const Versions = (lineage: string): string[] => {
   // it to be executed before WASM API is loaded.
 
   // @ts-ignore
-  if (typeof getLineageVersions !== "function") {
+  if (typeof getLineageVersions !== 'function') {
     return [];
   }
 
   // @ts-ignore
   const res = getLineageVersions(lineage);
-  if (res.error !== "") {
+  if (res.error !== '') {
     publish({ stderr: `Lineage: ${res.error}` });
     return [];
   }
-  publish({ stderr: "" });
+  publish({ stderr: '' });
   return JSON.parse(res.result);
 };
 
 export const ValidateAny = (lineage: string, input: string): void => {
   // @ts-ignore
   const res = validateAny(lineage, input);
-  if (res.error !== "") {
+  if (res.error !== '') {
     publish({ stderr: `'ValidateAny' failed: ${res.error}` });
     return;
   }
   publish({ stdout: `Input data matches schema version: ${res.result}` });
 };
 
-export const ValidateVersion = (
-  lineage: string,
-  input: string,
-  version: string
-): void => {
+export const ValidateVersion = (lineage: string, input: string, version: string): void => {
   // @ts-ignore
   const res = validateVersion(lineage, input, version);
-  if (res.error !== "") {
+  if (res.error !== '') {
     publish({ stderr: `'ValidateVersion' failed: ${res.error}` });
     return;
   }
@@ -56,21 +52,17 @@ export const ValidateVersion = (
 export const TranslateToLatest = (lineage: string, input: string): void => {
   // @ts-ignore
   const res = translateToLatest(lineage, input);
-  if (res.error !== "") {
+  if (res.error !== '') {
     publish({ stderr: `'TranslateToLatest' failed: ${res.error}` });
     return;
   }
   publish({ stdout: translateResultToString(res.result) });
 };
 
-export const TranslateToVersion = (
-  lineage: string,
-  input: string,
-  version: string
-): void => {
+export const TranslateToVersion = (lineage: string, input: string, version: string): void => {
   // @ts-ignore
   const res = translateToLatest(lineage, input);
-  if (res.error !== "") {
+  if (res.error !== '') {
     publish({ stderr: `'TranslateToVersion' failed: ${res.error}` });
     return;
   }
@@ -84,8 +76,8 @@ const translateResultToString = (res: string): string => {
 To: ${data.to}
         
 Result:        
-${JSON.stringify(data.result, null, "\t")}
+${JSON.stringify(data.result, null, '\t')}
         
 Lacunas:  
-${JSON.stringify(data.lacunas, null, "\t")}`;
+${JSON.stringify(data.lacunas, null, '\t')}`;
 };

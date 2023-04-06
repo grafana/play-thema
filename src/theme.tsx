@@ -1,8 +1,8 @@
-import React, { useReducer } from "react";
+import React, { useReducer } from 'react';
 
 export enum Theme {
-  dark = "dark",
-  light = "light",
+  dark = 'dark',
+  light = 'light',
 }
 
 interface ThemeCfg {
@@ -21,15 +21,10 @@ const themeReducer = (state: ThemeCfg): ThemeCfg => {
   return { ...state, theme };
 };
 
-export const ThemeContext: React.Context<ThemeCfg> =
-  React.createContext(initialState);
+export const ThemeContext: React.Context<ThemeCfg> = React.createContext(initialState);
 
 export const ThemeProvider = (props: React.PropsWithChildren) => {
   const [state, dispatch] = useReducer(themeReducer, initialState);
   const themeCfg: ThemeCfg = { theme: state.theme, toggleTheme: dispatch };
-  return (
-    <ThemeContext.Provider value={themeCfg}>
-      {props.children}
-    </ThemeContext.Provider>
-  );
+  return <ThemeContext.Provider value={themeCfg}>{props.children}</ThemeContext.Provider>;
 };

@@ -1,12 +1,8 @@
-import React, { useContext, useEffect, useState } from "react";
-import Terminal, {
-  ColorMode,
-  TerminalInput,
-  TerminalOutput,
-} from "react-terminal-ui";
-import { subscribe } from "../../services/terminal";
-import { Theme, ThemeContext } from "../../theme";
-import { nanoid } from "nanoid";
+import React, { useContext, useEffect, useState } from 'react';
+import Terminal, { ColorMode, TerminalInput, TerminalOutput } from 'react-terminal-ui';
+import { subscribe } from '../../services/terminal';
+import { Theme, ThemeContext } from '../../theme';
+import { nanoid } from 'nanoid';
 
 interface ConsoleInput {
   stdout: TerminalInput[];
@@ -25,15 +21,12 @@ const Console = () => {
   useEffect(() => {
     subscribe(({ stderr, stdout }) => {
       const inp: ConsoleInput = defaultConsoleInput();
-      if (stderr)
-        inp.stderr.push(<TerminalInput key={nanoid()}>{stderr}</TerminalInput>);
-      if (stdout)
-        inp.stdout.push(<TerminalInput key={nanoid()}>{stdout}</TerminalInput>);
+      if (stderr) inp.stderr.push(<TerminalInput key={nanoid()}>{stderr}</TerminalInput>);
+      if (stdout) inp.stdout.push(<TerminalInput key={nanoid()}>{stdout}</TerminalInput>);
       setInput(inp);
     });
   });
 
-  console.log(input);
   return (
     <Terminal name="Console" colorMode={color}>
       <TerminalOutput>~~~~~~ Standard Error ~~~~~~ </TerminalOutput>
