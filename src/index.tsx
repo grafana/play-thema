@@ -4,6 +4,9 @@ import './index.css';
 import App from './components/App';
 import { ThemeProvider } from './theme';
 import { StateProvider } from './state';
+import { getWebInstrumentations, initializeFaro } from '@grafana/faro-web-sdk';
+import { TracingInstrumentation } from '@grafana/faro-web-tracing';
+import { ReactIntegration } from '@grafana/faro-react';
 
 const element = document.getElementById('root');
 if (element) {
@@ -39,22 +42,23 @@ if (typeof WebAssembly.instantiateStreaming === 'function') {
     });
 }
 
-// Set up Grafana Faro
-import { getWebInstrumentations, initializeFaro } from '@grafana/faro-web-sdk';
-import { TracingInstrumentation } from '@grafana/faro-web-tracing';
+// Set up Grafana Faro (production-only)
+if (process.env.NODE_ENV === 'production') {
+  initializeFaro({
+    url: process.env.REACT_APP_FARO_URL,
+    app: {
+      name: 'Thema Playground',
+      version: '0.1.0',
+      environment: 'production',
+    },
+    instrumentations: [
+      ...getWebInstrumentations({
+        captureConsole: true,
+      }),
+      new TracingInstrumentation(),
+      new ReactIntegration(),
+    ],
+  });
 
-initializeFaro({
-  url: 'https://faro-collector-ops-us-east-0.grafana-ops.net/collect/c77a29db08562f50b90e199f4202ee78',
-  app: {
-    name: 'Thema Playground',
-    version: '0.1.0',
-    environment: 'production',
-  },
-  instrumentations: [
-    // Mandatory, overwriting the instrumentations array would cause the default instrumentations to be omitted
-    ...getWebInstrumentations(),
-
-    // Mandatory, initialization of the tracing package
-    new TracingInstrumentation(),
-  ],
-});
+  console.info('Faro was initialized');
+}

@@ -1702,6 +1702,15 @@
     "@opentelemetry/api-metrics" "^0.33.0"
     "@opentelemetry/otlp-transformer" "^0.35.0"
 
+"@grafana/faro-react@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@grafana/faro-react/-/faro-react-1.0.2.tgz#c99aac263d44a348ab032da7be99e1f6ab7081ef"
+  integrity sha512-EE2xaPLZ7L+5wQcRPmwiFEeZJuMB6n6sZKx2eg2eDJ/rC0G6a7YqXBJG3R/uisDPnr3nMYuJvjP2sUCy+papUg==
+  dependencies:
+    "@grafana/faro-web-sdk" "^1.0.2"
+    "@grafana/faro-web-tracing" "^1.0.2"
+    hoist-non-react-statics "^3.3.2"
+
 "@grafana/faro-web-sdk@^1.0.2":
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/@grafana/faro-web-sdk/-/faro-web-sdk-1.0.2.tgz#24e305a5d91fccc9c57577606f0adb12ad7f4a93"

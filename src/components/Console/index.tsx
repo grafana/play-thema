@@ -27,7 +27,6 @@ const Console = () => {
     });
   });
 
-  console.log(input);
   return (
     <Terminal name="Console" colorMode={color}>
       <TerminalOutput>~~~~~~ Standard Error ~~~~~~ </TerminalOutput>

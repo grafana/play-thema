@@ -5,6 +5,7 @@
   "license": "Apache-2.0",
   "homepage": "/play-thema",
   "dependencies": {
+    "@grafana/faro-react": "^1.0.2",
     "@grafana/faro-web-sdk": "^1.0.2",
     "@grafana/faro-web-tracing": "^1.0.2",
     "@monaco-editor/react": "4.4.6",
