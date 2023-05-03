@@ -2,19 +2,14 @@ export const basic = {
   lineage: `package ship
 
 import "github.com/grafana/thema"
+
 thema.#Lineage
 name: "ship"
-
-seqs: [
-    {
-        schemas: [
-        // v0.0
-            {
-                firstfield: string
-            },
-        ]
-    },
-]`,
+schemas: [{
+	version: [0, 0]
+	schema: firstfield: string
+}]
+lenses: []`,
   input: `{
     "firstfield": "value"
 }`,
@@ -24,24 +19,21 @@ export const multi = {
   lineage: `package ship
 
 import "github.com/grafana/thema"
+
 thema.#Lineage
 name: "ship"
-
-seqs: [
-    {
-        schemas: [
-            // v0.0
-            {
-                firstfield: string
-            },
-            // v0.1
-            {
-                firstfield: string
-                secondfield?: int
-            },
-        ]
-    },
-]`,
+schemas: [{
+	version: [0, 0]
+	schema: firstfield: string
+}, {
+	version: [0, 1]
+	schema:
+	{
+		firstfield:   string
+		secondfield?: int
+	}
+}]
+lenses: []`,
   input: `{
     "firstfield": "value",
     "secondfield": "100"
@@ -52,47 +44,41 @@ export const lenses = {
   lineage: `package ship
 
 import "github.com/grafana/thema"
+
 thema.#Lineage
 name: "ship"
-
-seqs: [
-    {
-        schemas: [
-            { // 0.0
-                firstfield: string
-            },
-        ]
-    },
-    {
-        schemas: [
-            { // 1.0
-                firstfield: string
-                secondfield: int
-            }
-        ]
-
-        lens: forward: {
-            from: seqs[0].schemas[0]
-            to: seqs[1].schemas[0]
-            rel: {
-                // Direct mapping of the first field
-                firstfield: from.firstfield
-                // Just some placeholder int, so we have a valid instance of schema 1.0
-                secondfield: -1
-            }
-            translated: to & rel
-        }
-        lens: reverse: {
-            from: seqs[1].schemas[0]
-            to: seqs[0].schemas[0]
-            rel: {
-                // Map the first field back
-                firstfield: from.firstfield
-            }
-            translated: to & rel
-        }
-    }
-]`,
+schemas: [{
+	version: [0, 0]
+	schema: firstfield: string
+}, {
+	version: [1, 0]
+	schema: {
+		firstfield:  string
+		secondfield: int // 1.0
+	}
+}]
+lenses: [{
+	to: [0, 0]
+	from: [1, 0]
+	input: _
+	result: {
+		// Map the first field back
+		firstfield: input.firstfield
+	}
+	lacunas: []
+}, {
+	to: [1, 0]
+	from: [0, 0]
+	input: _
+	result: {
+		// Direct mapping of the first field
+		firstfield: input.firstfield
+		// Just some placeholder int, so we have a valid instance of schema 1.0
+		secondfield: -1
+	}
+	lacunas: []
+}]
+`,
   input: `{
     "firstfield": "value"
 }`,
