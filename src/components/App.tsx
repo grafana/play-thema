@@ -6,6 +6,7 @@ import Column from './Column';
 import Console from './Console';
 import { ThemeContext } from '../theme';
 import { StateContext } from '../state';
+import {Button, Modal} from "@grafana/ui";
 
 const App = () => {
   const { theme } = useContext(ThemeContext);

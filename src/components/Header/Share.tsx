@@ -2,15 +2,11 @@ import React, { CSSProperties, useContext, useEffect, useRef, useState } from 'r
 import { fetchState, storeState } from '../../services/store';
 import { StateContext } from '../../state';
 import { publish } from '../../services/terminal';
+import {Button, IconButton, Modal, TabContent} from "@grafana/ui";
 
 const styles: { [name: string]: CSSProperties } = {
   btn: {
-    margin: '1px 0',
-    minWidth: '100px',
-    fontWeight: 700,
-    border: 0,
-    color: 'white',
-    backgroundColor: '#3d71d9',
+    margin: '6px 0',
   },
   input: {
     width: '250',
@@ -55,14 +51,33 @@ const Share = () => {
     });
   };
 
+  const [modelOpen, setModelOpen] = useState<boolean>(false);
+  const toggleModelOpen = () => setModelOpen(!modelOpen);
+
   return (
     <>
-      <button style={styles.btn} onClick={shareFn}>
-        Share
-      </button>
-      <input style={styles.input} ref={shareRef} onClick={focusFn} readOnly={true} value={shareUrl(shareId || '')} />
+      {/*<button style={styles.btn} onClick={shareFn}>*/}
+      {/*  Share*/}
+      {/*</button>*/}
+      <IconButton name={"share-alt"} onClick={toggleModelOpen} size={"xl"} variant={"primary"} style={styles.btn} tooltip={"Share this code"} />
+      {/*<input style={styles.input} ref={shareRef} onClick={focusFn} readOnly={true} value={shareUrl(shareId || '')} />*/}
+      <ShareModal isOpen={modelOpen} onDismiss={toggleModelOpen}/>
     </>
   );
 };
+
+interface ShareModelProps {
+  isOpen?: boolean;
+  onDismiss?: () => void;
+}
+
+const ShareModal = ({isOpen, onDismiss}: ShareModelProps) =>
+      <Modal className={"share-modal"} title="Something" isOpen={isOpen} onDismiss={onDismiss}>
+        {"Text"}
+        <Modal.ButtonRow>
+          <Button> Copy </Button>
+        </Modal.ButtonRow>
+      </Modal>;
+
 
 export default Share;

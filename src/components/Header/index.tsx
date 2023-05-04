@@ -17,9 +17,6 @@ const styles: { [name: string]: CSSProperties } = {
     border: 'rgba(204, 204, 220, 0.07) solid 1px',
     borderRadius: '2px',
   },
-  title: {
-    marginRight: '4vw',
-  },
   btn: {
     margin: '1px 0',
     minWidth: '100px',
@@ -59,12 +56,12 @@ const Header = () => {
 
   return (
     <div className="header" style={styles.header}>
-      <h3 style={styles.title}>Thema Playground</h3>
+      <h3>Thema Playground</h3>
+      <Share />
       <OpSelector />
       <button style={{ ...styles.btn, ...styles.btnFmt }} onClick={formatFn}>
         Format
       </button>
-      <Share />
       <Examples style={styles.examples} />
       <ThemeSwitch style={styles.themeSwitch} />
     </div>

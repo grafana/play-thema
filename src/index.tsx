@@ -13,13 +13,11 @@ if (element) {
   const root: ReactDOM.Root = ReactDOM.createRoot(element);
 
   root.render(
-    <StrictMode>
       <ThemeProvider>
         <StateProvider>
           <App />
         </StateProvider>
       </ThemeProvider>
-    </StrictMode>
   );
 }
 

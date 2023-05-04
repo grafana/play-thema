@@ -159,3 +159,7 @@ select::-ms-expand {
 .theme-light .react-terminal-wrapper {
   background-color: #ffffff !important;
 }
+
+.theme-dark .share-modal {
+  color: white;
+}
