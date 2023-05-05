@@ -1,23 +1,31 @@
-import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './components/App';
-import { ThemeProvider } from './theme';
+import { ThemeContext, ThemeProvider } from './theme';
 import { StateProvider } from './state';
 import { getWebInstrumentations, initializeFaro } from '@grafana/faro-web-sdk';
+import { ThemeContext as GrafanaThemeContext } from '@grafana/ui';
 import { TracingInstrumentation } from '@grafana/faro-web-tracing';
 import { ReactIntegration } from '@grafana/faro-react';
+import React, { useContext } from 'react';
+
+const GrafanaTheme = (props: React.PropsWithChildren) => {
+  const { grafanaTheme } = useContext(ThemeContext);
+  return <GrafanaThemeContext.Provider value={grafanaTheme}>{props.children}</GrafanaThemeContext.Provider>;
+};
 
 const element = document.getElementById('root');
 if (element) {
   const root: ReactDOM.Root = ReactDOM.createRoot(element);
 
   root.render(
-      <ThemeProvider>
+    <ThemeProvider>
+      <GrafanaTheme>
         <StateProvider>
           <App />
         </StateProvider>
-      </ThemeProvider>
+      </GrafanaTheme>
+    </ThemeProvider>
   );
 }
 
