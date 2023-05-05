@@ -63,7 +63,7 @@ const Share = () => {
       <Modal className={styles.modal} title="Share this code" isOpen={modalOpen} onDismiss={toggleModalOpen}>
         <div>Copy the following url to share your Thema Playground with the world:</div>
         <br />
-        <Input ref={shareRef} onClick={onFocus} readOnly={true} value={shareUrl(shareId || '')} />
+        <Input ref={shareRef} onClick={onFocus} readOnly={true} value={shareUrl(shareId)} />
         <Modal.ButtonRow>
           <Button onClick={onCopy}>Copy</Button>
         </Modal.ButtonRow>
