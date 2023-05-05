@@ -58,13 +58,7 @@ const Share = () => {
   return (
     <>
       <div className={styles.iconContainer}>
-        <IconButton
-        name={'share-alt'}
-        onClick={shareFn}
-        size={'xl'}
-        variant={'primary'}
-        tooltip={'Share this code'}
-      />
+        <IconButton name={'share-alt'} onClick={shareFn} size={'xl'} variant={'primary'} tooltip={'Share this code'} />
       </div>
       <Modal className={styles.modal} title="Share this code" isOpen={modalOpen} onDismiss={toggleModalOpen}>
         <div>Copy the following url to share your Thema Playground with the world:</div>
