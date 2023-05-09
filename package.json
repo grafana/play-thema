@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": false,
   "license": "Apache-2.0",
-  "homepage": "/play-thema",
+  "homepage": "/",
   "dependencies": {
     "@grafana/faro-react": "^1.0.2",
     "@grafana/faro-web-sdk": "^1.0.2",
@@ -50,5 +50,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "engines": {
+    "node": ">= 18"
   }
 }
