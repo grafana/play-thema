@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/play-thema/static/css/main.7781e727.css",
-    "main.js": "/play-thema/static/js/main.be74aaca.js",
+    "main.js": "/play-thema/static/js/main.1c99dee5.js",
     "static/media/grafana.svg": "/play-thema/static/media/grafana.1e0deb6bbbca4c0f06ab.svg",
     "index.html": "/play-thema/index.html",
     "main.7781e727.css.map": "/play-thema/static/css/main.7781e727.css.map",
-    "main.be74aaca.js.map": "/play-thema/static/js/main.be74aaca.js.map"
+    "main.1c99dee5.js.map": "/play-thema/static/js/main.1c99dee5.js.map"
   },
   "entrypoints": [
     "static/css/main.7781e727.css",
-    "static/js/main.be74aaca.js"
+    "static/js/main.1c99dee5.js"
   ]
 }
