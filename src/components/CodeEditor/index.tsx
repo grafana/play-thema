@@ -1,7 +1,8 @@
 import React, { useContext, useRef } from 'react';
 import * as monaco from 'monaco-editor';
 import Editor, { Monaco } from '@monaco-editor/react';
-import { Theme, ThemeContext } from '../../theme';
+import { Theme } from '../../theme';
+import { useTheme2 } from '@grafana/ui';
 
 interface Props {
   value: string;
@@ -15,8 +16,8 @@ const CodeEditor = ({ value, onChange, isReadOnly, language }: Props) => {
   const editorRef = useRef<null | monaco.editor.IStandaloneCodeEditor>(null);
   const monacoRef = useRef<null | Monaco>(null);
 
-  const { theme } = useContext(ThemeContext);
-  const editorTheme = theme === Theme.dark ? 'thema-dark' : 'thema-light';
+  const theme = useTheme2();
+  const editorTheme = theme.name.toLowerCase() === Theme.dark ? 'thema-dark' : 'thema-light';
 
   const handleEditorDidMount = (editor: monaco.editor.IStandaloneCodeEditor, monaco: Monaco) => {
     editorRef.current = editor;

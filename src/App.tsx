@@ -4,11 +4,11 @@ import CodeEditor from './components/CodeEditor';
 import Header from './components/Header';
 import Column from './components/Column';
 import Console from './components/Console';
-import { ThemeContext } from './theme';
+import { useTheme2 } from '@grafana/ui';
 import { StateContext } from './state';
 
 const App = () => {
-  const { theme } = useContext(ThemeContext);
+  const theme = useTheme2().name.toLowerCase();
   const { input, lineage, setInput, setLineage } = useContext(StateContext);
 
   return (
