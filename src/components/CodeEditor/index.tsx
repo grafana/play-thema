@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import * as monaco from 'monaco-editor';
 import Editor, { Monaco } from '@monaco-editor/react';
 import { Theme, useTheme } from '../../theme';
@@ -18,6 +18,30 @@ const CodeEditor = ({ value, onChange, isReadOnly, language }: Props) => {
   const theme = useTheme();
   const editorTheme = theme.name.toLowerCase() === Theme.dark ? 'thema-dark' : 'thema-light';
 
+  useEffect(() => {
+    if (theme.isDark) {
+      monaco.editor.defineTheme('thema-dark', {
+        base: 'vs-dark',
+        inherit: true,
+        rules: [],
+        colors: {
+          'editor.background': theme.colors.background.secondary,
+        },
+      });
+    } else {
+      monaco.editor.defineTheme('thema-light', {
+        base: 'vs',
+        inherit: true,
+        rules: [],
+        colors: {
+          'editor.background': '#F4F5F5',
+        },
+      });
+    }
+
+    monaco.editor.setTheme(editorTheme);
+  }, [theme]);
+
   const handleEditorDidMount = (editor: monaco.editor.IStandaloneCodeEditor, monaco: Monaco) => {
     editorRef.current = editor;
     monacoRef.current = monaco;
@@ -36,7 +60,7 @@ const CodeEditor = ({ value, onChange, isReadOnly, language }: Props) => {
       inherit: true,
       rules: [],
       colors: {
-        'editor.background': theme.colors.background.secondary,
+        'editor.background': '#F4F5F5',
       },
     });
 
