@@ -1084,11 +1084,6 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@braintree/sanitize-url@6.0.1":
-  version "6.0.1"
-  resolved "https://registry.yarnpkg.com/@braintree/sanitize-url/-/sanitize-url-6.0.1.tgz#45ff061b9ded1c6e4474b33b336ebb1b986b825a"
-  integrity sha512-zr9Qs9KFQiEvMWdZesjcmRJlUck5NR+eKGS1uyKk+oYTWwlYrsoPEi6VmG6/TzBD1hKCGEimrhTgGS6hvn/xIQ==
-
 "@braintree/sanitize-url@6.0.2":
   version "6.0.2"
   resolved "https://registry.yarnpkg.com/@braintree/sanitize-url/-/sanitize-url-6.0.2.tgz#6110f918d273fe2af8ea1c4398a88774bb9fc12f"
@@ -1426,34 +1421,7 @@
   dependencies:
     tslib "^2.4.0"
 
-"@grafana/data@9.4.7":
-  version "9.4.7"
-  resolved "https://registry.yarnpkg.com/@grafana/data/-/data-9.4.7.tgz#8b4c15a5b52ec13908c006baf87416354ee8251a"
-  integrity sha512-GnP91XSuTlRaT4crRh7OgC58rKsF/ANAZTFeHOYqVD7r47upTgnnnM46khSLhvA3MoKfNZflXOneaIjU4c5Hyw==
-  dependencies:
-    "@braintree/sanitize-url" "6.0.1"
-    "@grafana/schema" "9.4.7"
-    "@types/d3-interpolate" "^3.0.0"
-    d3-interpolate "3.0.1"
-    date-fns "2.29.3"
-    eventemitter3 "4.0.7"
-    fast_array_intersect "1.1.0"
-    history "4.10.1"
-    lodash "4.17.21"
-    marked "4.2.0"
-    moment "2.29.4"
-    moment-timezone "0.5.38"
-    ol "7.1.0"
-    papaparse "5.3.2"
-    react-use "17.4.0"
-    regenerator-runtime "0.13.10"
-    rxjs "7.5.7"
-    tinycolor2 "1.4.2"
-    tslib "2.4.1"
-    uplot "1.6.24"
-    xss "1.0.14"
-
-"@grafana/data@9.5.2":
+"@grafana/data@9.5.2", "@grafana/data@^9.5.2":
   version "9.5.2"
   resolved "https://registry.yarnpkg.com/@grafana/data/-/data-9.5.2.tgz#983042208a61c3a321499da7837fdd2ecbe7a04c"
   integrity sha512-L5lXzwPfG1Zu04slMLVqwETykYoWfJFqB7HqeqHWRtUD4YW7NlsyNXnSI7/d0GnbPGNWjejWFxjss3jq4Beq5Q==
@@ -1537,13 +1505,6 @@
     "@opentelemetry/sdk-trace-base" "^1.9.0"
     "@opentelemetry/sdk-trace-web" "^1.9.0"
     "@opentelemetry/semantic-conventions" "^1.9.0"
-
-"@grafana/schema@9.4.7":
-  version "9.4.7"
-  resolved "https://registry.yarnpkg.com/@grafana/schema/-/schema-9.4.7.tgz#bb918ec7f096e0b81d7ead921ac1addeb265dd0e"
-  integrity sha512-uTrg/XmMhfxXTSRskNRdUzDCK9XdwHHnNJkfUltzSF5v16bc9iE1u/NrkuEBxoLh6hji9Gd6pw7mS0K9o9/0ww==
-  dependencies:
-    tslib "2.4.1"
 
 "@grafana/schema@9.5.2":
   version "9.5.2"
@@ -5836,15 +5797,15 @@ etag@~1.8.1:
   resolved "https://registry.yarnpkg.com/etag/-/etag-1.8.1.tgz#41ae2eeb65efa62268aebfea83ac7d79299b0887"
   integrity sha512-aIL5Fx7mawVa300al2BnEE4iNvo1qETxLrPI/o05L7z6go7fCw1J6EQmbK4FmJ2AS7kgVF/KEZWufBfdClMcPg==
 
-eventemitter3@4.0.7, eventemitter3@^4.0.0:
-  version "4.0.7"
-  resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-4.0.7.tgz#2de9b68f6528d5644ef5c59526a1b4a07306169f"
-  integrity sha512-8guHBZCwKnFhYdHr2ysuRWErTwhoN2X8XELRlrRwpmfeY2jjuUN4taQMsULKUVo1K4DvZl+0pgfyoysHxvmvEw==
-
 eventemitter3@5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-5.0.0.tgz#084eb7f5b5388df1451e63f4c2aafd71b217ccb3"
   integrity sha512-riuVbElZZNXLeLEoprfNYoDSwTBRR44X3mnhdI1YcnENpWTCsTTVZ2zFuqQcpoyqPQIUXdiPEU0ECAq0KQRaHg==
+
+eventemitter3@^4.0.0:
+  version "4.0.7"
+  resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-4.0.7.tgz#2de9b68f6528d5644ef5c59526a1b4a07306169f"
+  integrity sha512-8guHBZCwKnFhYdHr2ysuRWErTwhoN2X8XELRlrRwpmfeY2jjuUN4taQMsULKUVo1K4DvZl+0pgfyoysHxvmvEw==
 
 events@^3.2.0:
   version "3.3.0"
@@ -6218,19 +6179,6 @@ gensync@^1.0.0-beta.2:
   version "1.0.0-beta.2"
   resolved "https://registry.yarnpkg.com/gensync/-/gensync-1.0.0-beta.2.tgz#32a6ee76c3d7f52d46b2b1ae5d93fea8580a25e0"
   integrity sha512-3hN7NaskYvMDLQY55gnW3NQ+mesEAepTqlg+VEbj7zzqEMBVNhzcGYYeqFo/TlYz6eQiFcp1HcsCZO+nGgS8zg==
-
-geotiff@2.0.4:
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/geotiff/-/geotiff-2.0.4.tgz#d6f231fdd76186aba21c61823ed759fcbf5d4f86"
-  integrity sha512-aG8h9bJccGusioPsEWsEqx8qdXpZN71A20WCvRKGxcnHSOWLKmC5ZmsAmodfxb9TRQvs+89KikGuPzxchhA+Uw==
-  dependencies:
-    "@petamoriken/float16" "^3.4.7"
-    lerc "^3.0.0"
-    lru-cache "^6.0.0"
-    pako "^2.0.4"
-    parse-headers "^2.0.2"
-    web-worker "^1.2.0"
-    xml-utils "^1.0.2"
 
 geotiff@^2.0.7:
   version "2.0.7"
@@ -8002,11 +7950,6 @@ mapbox-to-css-font@^2.4.1:
   resolved "https://registry.yarnpkg.com/mapbox-to-css-font/-/mapbox-to-css-font-2.4.2.tgz#a9e31b363ad8ca881cd339ca99f2d2a6b02ea5dd"
   integrity sha512-f+NBjJJY4T3dHtlEz1wCG7YFlkODEjFIYlxDdLIDMNpkSksqTt+l/d4rjuwItxuzkuMFvPyrjzV2lxRM4ePcIA==
 
-marked@4.2.0:
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/marked/-/marked-4.2.0.tgz#f1683b077626a6c53e28926b798a18184aa13a91"
-  integrity sha512-1qWHjHlBKwjnDfrkxd0L3Yx4LTad/WO7+d13YsXAC/ZfKj7p0xkLV3sDXJzfWgL7GfW4IBZwMAYWaz+ifyQouQ==
-
 marked@4.2.12:
   version "4.2.12"
   resolved "https://registry.yarnpkg.com/marked/-/marked-4.2.12.tgz#d69a64e21d71b06250da995dcd065c11083bebb5"
@@ -8147,13 +8090,6 @@ module-details-from-path@^1.0.3:
   resolved "https://registry.yarnpkg.com/module-details-from-path/-/module-details-from-path-1.0.3.tgz#114c949673e2a8a35e9d35788527aa37b679da2b"
   integrity sha512-ySViT69/76t8VhE1xXHK6Ch4NcDd26gx0MzKXLO+F7NOtnqH68d9zF94nT8ZWSxXh8ELOERsnJO/sWt1xZYw5A==
 
-moment-timezone@0.5.38:
-  version "0.5.38"
-  resolved "https://registry.yarnpkg.com/moment-timezone/-/moment-timezone-0.5.38.tgz#9674a5397b8be7c13de820fd387d8afa0f725aad"
-  integrity sha512-nMIrzGah4+oYZPflDvLZUgoVUO4fvAqHstvG3xAUnMolWncuAiLDWNnJZj6EwJGMGfb1ZcuTFE6GI3hNOVWI/Q==
-  dependencies:
-    moment ">= 2.9.0"
-
 moment-timezone@0.5.41:
   version "0.5.41"
   resolved "https://registry.yarnpkg.com/moment-timezone/-/moment-timezone-0.5.41.tgz#a7ad3285fd24aaf5f93b8119a9d749c8039c64c5"
@@ -8161,7 +8097,7 @@ moment-timezone@0.5.41:
   dependencies:
     moment "^2.29.4"
 
-moment@2.29.4, moment@2.x, "moment@>= 2.9.0", moment@^2.29.4:
+moment@2.29.4, moment@2.x, moment@^2.29.4:
   version "2.29.4"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.4.tgz#3dbe052889fe7c1b2ed966fcb3a77328964ef108"
   integrity sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==
@@ -8395,14 +8331,6 @@ obuf@^1.0.0, obuf@^1.1.2:
   resolved "https://registry.yarnpkg.com/obuf/-/obuf-1.1.2.tgz#09bea3343d41859ebd446292d11c9d4db619084e"
   integrity sha512-PX1wu0AmAdPqOL1mWhqmlOd8kOIZQwGZw6rh7uby9fTc5lhaOWFLX3I6R1hrF9k3zUY40e6igsLGkDXK92LJNg==
 
-ol-mapbox-style@9.1.0:
-  version "9.1.0"
-  resolved "https://registry.yarnpkg.com/ol-mapbox-style/-/ol-mapbox-style-9.1.0.tgz#1504b1a2c3cc23482c3c95cd55a1cf1d2ac8a451"
-  integrity sha512-R/XE6FdviaXNdnSw6ItHSEreMtQU68cwQCGv4Kl8yG0V1dZhnI5JWr8IOphJwffPVxfWTCnJb5aALGSB89MvhA==
-  dependencies:
-    "@mapbox/mapbox-gl-style-spec" "^13.23.1"
-    mapbox-to-css-font "^2.4.1"
-
 ol-mapbox-style@^9.2.0:
   version "9.7.0"
   resolved "https://registry.yarnpkg.com/ol-mapbox-style/-/ol-mapbox-style-9.7.0.tgz#38a4f7abc8f0a94f378dcdb7cefdcc69ca3f6287"
@@ -8410,17 +8338,6 @@ ol-mapbox-style@^9.2.0:
   dependencies:
     "@mapbox/mapbox-gl-style-spec" "^13.23.1"
     mapbox-to-css-font "^2.4.1"
-
-ol@7.1.0:
-  version "7.1.0"
-  resolved "https://registry.yarnpkg.com/ol/-/ol-7.1.0.tgz#aab69a0539e59d6a4361cbc0f69f8b00c7298c9c"
-  integrity sha512-mAeV5Ca4mFhYaJoGWNZnIMN5VNnFTf63FgZjBiYu/DjQDGKNsD5QyvvqVziioVdOOgl6b8rPB/ypj2XNBinPwA==
-  dependencies:
-    earcut "^2.2.3"
-    geotiff "2.0.4"
-    ol-mapbox-style "9.1.0"
-    pbf "3.2.1"
-    rbush "^3.0.1"
 
 ol@7.2.2:
   version "7.2.2"
@@ -10070,11 +9987,6 @@ regenerate@^1.4.2:
   resolved "https://registry.yarnpkg.com/regenerate/-/regenerate-1.4.2.tgz#b9346d8827e8f5a32f7ba29637d398b69014848a"
   integrity sha512-zrceR/XhGYU/d/opr2EKO7aRHUeiBI8qjtfHqADTwZd6Szfy16la6kqD0MIUs5z5hx6AaKa+PixpPrR289+I0A==
 
-regenerator-runtime@0.13.10:
-  version "0.13.10"
-  resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.13.10.tgz#ed07b19616bcbec5da6274ebc75ae95634bfc2ee"
-  integrity sha512-KepLsg4dU12hryUO7bp/axHAKvwGOCV0sGloQtpagJ12ai+ojVDqkeGSiRX1zlq+kjIMZ1t7gpze+26QqtdGqw==
-
 regenerator-runtime@0.13.11, regenerator-runtime@^0.13.11, regenerator-runtime@^0.13.9:
   version "0.13.11"
   resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.13.11.tgz#f6dca3e7ceec20590d07ada785636a90cdca17f9"
@@ -10295,13 +10207,6 @@ rw@1, rw@^1.3.3:
   version "1.3.3"
   resolved "https://registry.yarnpkg.com/rw/-/rw-1.3.3.tgz#3f862dfa91ab766b14885ef4d01124bfda074fb4"
   integrity sha512-PdhdWy89SiZogBLaw42zdeqtRJ//zFd2PgQavcICDUgJT5oW10QCRKbJ6bg4r0/UY2M6BWd5tkxuGFRvCkgfHQ==
-
-rxjs@7.5.7:
-  version "7.5.7"
-  resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-7.5.7.tgz#2ec0d57fdc89ece220d2e702730ae8f1e49def39"
-  integrity sha512-z9MzKh/UcOqB3i20H6rtrlaE/CgjLOvheWK/9ILrbhROGTweAi1BaFsTT9FbwZi5Trr1qNRs+MXkhmR06awzQA==
-  dependencies:
-    tslib "^2.1.0"
 
 rxjs@7.8.0:
   version "7.8.0"
@@ -11188,11 +11093,6 @@ tiny-warning@^1.0.0:
   resolved "https://registry.yarnpkg.com/tiny-warning/-/tiny-warning-1.0.3.tgz#94a30db453df4c643d0fd566060d60a875d84754"
   integrity sha512-lBN9zLN/oAf68o3zNXYrdCt1kP8WsiGW8Oo2ka41b2IM5JL/S1CTyX1rW0mb/zSuJun0ZUrDxx4sqvYS2FWzPA==
 
-tinycolor2@1.4.2:
-  version "1.4.2"
-  resolved "https://registry.yarnpkg.com/tinycolor2/-/tinycolor2-1.4.2.tgz#3f6a4d1071ad07676d7fa472e1fac40a719d8803"
-  integrity sha512-vJhccZPs965sV/L2sU4oRQVAos0pQXwsvTLkWYdqJ+a8Q5kPFzJTuOFwy7UniPli44NKQGAglksjvOcpo95aZA==
-
 tinycolor2@1.6.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/tinycolor2/-/tinycolor2-1.6.0.tgz#f98007460169b0263b97072c5ae92484ce02d09e"
@@ -11287,11 +11187,6 @@ tsconfig-paths@^3.14.1:
     json5 "^1.0.2"
     minimist "^1.2.6"
     strip-bom "^3.0.0"
-
-tslib@2.4.1:
-  version "2.4.1"
-  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.4.1.tgz#0d0bfbaac2880b91e22df0768e55be9753a5b17e"
-  integrity sha512-tGyy4dAjRIEwI7BzsB0lynWgOpfqjUdq91XXAlIWD2OwKBH7oCl/GZG/HT4BOHrTlPMOASlMQ7veyTqpmRcrNA==
 
 tslib@2.5.0, tslib@^2.0.3, tslib@^2.1.0, tslib@^2.3.0, tslib@^2.4.0:
   version "2.5.0"
@@ -12042,7 +11937,7 @@ xmlchars@^2.2.0:
   resolved "https://registry.yarnpkg.com/xmlchars/-/xmlchars-2.2.0.tgz#060fe1bcb7f9c76fe2a17db86a9bc3ab894210cb"
   integrity sha512-JZnDKK8B0RCDw84FNdDAIpZK+JuJw+s7Lz8nksI7SIuU3UXJJslUthsi+uWBUYOwPFwW7W7PRLRfUKpxjtjFCw==
 
-xss@1.0.14, xss@^1.0.14:
+xss@^1.0.14:
   version "1.0.14"
   resolved "https://registry.yarnpkg.com/xss/-/xss-1.0.14.tgz#4f3efbde75ad0d82e9921cc3c95e6590dd336694"
   integrity sha512-og7TEJhXvn1a7kzZGQ7ETjdQVS2UfZyTlsEdDOqvQF7GoxNfY+0YLCzBy1kPdsDDx4QuNAonQPddpsn6Xl/7sw==
