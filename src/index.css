@@ -1,11 +1,62 @@
+/* Global styles */
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans',
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans',
     'Droid Sans', 'Helvetica Neue', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    --bs-body-color: attr(data-text);
+}
+
+body.dark {
+    color: rgb(204, 204, 220);
+}
+
+body.light {
+    color: rgba(36, 41, 46, 1);
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+/* Terminal styles */
+
+.react-terminal-wrapper {
+    margin: 0 auto;
+    height: 100% !important;
+    width: 100% !important;
+    text-align: left;
+    font-size: 16px !important;
+    min-height: 100px;
+    padding: 50px 45px 5px !important;
+}
+
+.react-terminal-input {
+    margin-bottom: 20px;
+    overflow: hidden;
+    white-space: nowrap;
+    -webkit-animation: typing 2s steps(180, end);
+    animation: typing 2s steps(180, end);
+}
+
+.react-terminal-line:not(.react-terminal-input) {
+    margin: 5px auto 15px auto;
+}
+
+@keyframes typing {
+    from {
+        width: 0;
+    }
+    to {
+        width: 100%;
+    }
+}
+
+.react-terminal-input:after {
+    content: '▋';
+    font-family: monospace;
+    margin-left: 0.2em;
+    -webkit-animation: blink 1s infinite;
+    animation: blink 1s infinite;
 }

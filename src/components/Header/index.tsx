@@ -6,47 +6,14 @@ import Examples from './Examples';
 import ThemeSwitch from './ThemeSwitch';
 import { StateContext } from '../../state';
 import Share from './Share';
-
-const styles: { [name: string]: CSSProperties } = {
-  header: {
-    display: 'flex',
-    gap: '20px',
-    height: '60px',
-    width: '100vw',
-    padding: '10px 40px',
-    border: 'rgba(204, 204, 220, 0.07) solid 1px',
-    borderRadius: '2px',
-  },
-  btn: {
-    margin: '1px 0',
-    minWidth: '100px',
-    fontWeight: 700,
-    border: 0,
-    color: 'white',
-    backgroundColor: '#3d71d9',
-  },
-  btnFmt: {
-    marginLeft: '5vw',
-  },
-  input: {
-    width: '250',
-    fontSize: '15px',
-    margin: '1px 0',
-  },
-  examples: {
-    marginLeft: '10vw',
-    marginRight: '1vw',
-    display: 'flex',
-  },
-  themeSwitch: {
-    color: '#3d71d9',
-    cursor: 'pointer',
-  },
-};
+import { GrafanaTheme2 } from '@grafana/data';
+import { useStyles } from '../../theme';
+import { css } from '@emotion/css';
+import { Button } from '@grafana/ui';
 
 const Header = () => {
   const { input, lineage, setInput, setLineage } = useContext(StateContext);
-
+  const styles = useStyles(getStyles);
   const formatFn = () => {
     tryOrReport(() => {
       setInput(fmtJson(input));
@@ -55,17 +22,43 @@ const Header = () => {
   };
 
   return (
-    <div className="header" style={styles.header}>
+    <div className={styles.header}>
       <h3>Thema Playground</h3>
       <Share />
       <OpSelector />
-      <button style={{ ...styles.btn, ...styles.btnFmt }} onClick={formatFn}>
-        Format
-      </button>
-      <Examples style={styles.examples} />
-      <ThemeSwitch style={styles.themeSwitch} />
+      <Button onClick={formatFn}>Format</Button>
+      <Examples />
+      <ThemeSwitch className={styles.themeSwitch} />
     </div>
   );
 };
 
+const getStyles = (theme: GrafanaTheme2) => {
+  return {
+    header: css`
+      display: flex;
+      gap: 20px;
+      height: 60px;
+      width: 100vw;
+      padding: 10px 40px;
+      border: 1px solid ${theme.colors.border.weak};
+      border-radius: 2px;
+      color: ${theme.colors.text.primary};
+    `,
+    input: css`
+      width: 250px;
+      font-size: 15px;
+      margin: 1px 0;
+    `,
+    examples: css`
+      margin-left: 10vw;
+      margin-right: 1vw;
+      display: flex;
+    `,
+    themeSwitch: css`
+      color: #3d71d9;
+      cursor: pointer;
+    `,
+  };
+};
 export default Header;

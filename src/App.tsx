@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import './App.css';
 import CodeEditor from './components/CodeEditor';
 import Header from './components/Header';
 import Column from './components/Column';
@@ -8,9 +7,11 @@ import { StateContext } from './state';
 import { GrafanaTheme2 } from '@grafana/data';
 import { css } from '@emotion/css';
 import { useStyles } from './theme';
+import { useTheme2 } from '@grafana/ui';
 
 const App = () => {
   const styles = useStyles(getStyles);
+  const theme = useTheme2();
   const { input, lineage, setInput, setLineage } = useContext(StateContext);
 
   return (

@@ -43,46 +43,6 @@ body {
   }
 }
 
-/* Terminal styles */
-
-.react-terminal-wrapper {
-  margin: 0 auto;
-  height: 100% !important;
-  width: 100% !important;
-  text-align: left;
-  font-size: 16px !important;
-  min-height: 100px;
-  padding: 50px 45px 5px !important;
-}
-
-.react-terminal-input {
-  margin-bottom: 20px;
-  overflow: hidden;
-  white-space: nowrap;
-  -webkit-animation: typing 2s steps(180, end);
-  animation: typing 2s steps(180, end);
-}
-
-.react-terminal-line:not(.react-terminal-input) {
-  margin: 5px auto 15px auto;
-}
-
-@keyframes typing {
-  from {
-    width: 0;
-  }
-  to {
-    width: 100%;
-  }
-}
-
-.react-terminal-input:after {
-  content: '▋';
-  font-family: monospace;
-  margin-left: 0.2em;
-  -webkit-animation: blink 1s infinite;
-  animation: blink 1s infinite;
-}
 
 /* Header styles */
 
@@ -96,17 +56,17 @@ body {
   margin-right: 10px;
 }
 
-select {
-  /* for Firefox */
-  -moz-appearance: none;
-  /* for Chrome */
-  -webkit-appearance: none;
-}
+/*select {*/
+/*  !* for Firefox *!*/
+/*  -moz-appearance: none;*/
+/*  !* for Chrome *!*/
+/*  -webkit-appearance: none;*/
+/*}*/
 
-/* For IE10 */
-select::-ms-expand {
-  display: none;
-}
+/*!* For IE10 *!*/
+/*select::-ms-expand {*/
+/*  display: none;*/
+/*}*/
 
 /* Themed  styles */
 

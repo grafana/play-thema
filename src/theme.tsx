@@ -1,6 +1,10 @@
-import React, { useContext, useState } from 'react';
-import { createTheme, GrafanaTheme2 } from '@grafana/data';
+import React, { useContext, useEffect, useState } from 'react';
+import { BusEventWithPayload, createTheme, GrafanaTheme2 } from '@grafana/data';
 import memoizeOne from 'memoize-one';
+import { EventBusSrv, EventBusExtended } from '@grafana/data';
+import { ThemeContext } from '@grafana/ui';
+
+export const appEvents: EventBusExtended = new EventBusSrv();
 
 type ThemeObject = {
   id: string;
@@ -18,21 +22,29 @@ export enum Theme {
   light = 'light',
 }
 
-type ThemeContextType = [GrafanaTheme2, () => void];
-
-export const ThemeContext = React.createContext<ThemeContextType>([getThemeById(''), () => {}]);
+export class ThemeChangedEvent extends BusEventWithPayload<GrafanaTheme2> {
+  static type = 'theme-changed';
+}
 
 export const ThemeProvider = ({ children }: React.PropsWithChildren) => {
   const [theme, setTheme] = useState<GrafanaTheme2>(getThemeById(''));
-  const toggleTheme = () => {
-    const newTheme = theme.isDark ? getThemeById('light') : getThemeById('dark');
-    setTheme(newTheme);
-  };
-  return <ThemeContext.Provider value={[theme, toggleTheme]}>{children}</ThemeContext.Provider>;
+
+  useEffect(() => {
+    document.body.className = theme.name.toLowerCase();
+    const sub = appEvents.subscribe(ThemeChangedEvent, (event) => {
+      const newTheme = event.payload;
+      setTheme(newTheme);
+      // TODO this will break if body has other classes
+      document.body.className = newTheme.name.toLowerCase();
+    });
+
+    return () => sub.unsubscribe();
+  }, []);
+  return <ThemeContext.Provider value={theme}>{children}</ThemeContext.Provider>;
 };
 
 export function useThemeContext() {
-  const context = useContext<ThemeContextType>(ThemeContext);
+  const context = useContext(ThemeContext);
   if (!context) {
     throw new Error('useThemeContext must be used within the ThemeProvider');
   }
@@ -40,8 +52,7 @@ export function useThemeContext() {
 }
 
 export const useTheme = () => {
-  const [theme] = useThemeContext();
-
+  const theme = useThemeContext();
   return theme;
 };
 
@@ -73,3 +84,8 @@ export function useStyles<T>(getStyles: (theme: GrafanaTheme2) => T) {
 
   return memoizedStyleCreator(theme);
 }
+
+export const toggleTheme = (theme: GrafanaTheme2) => {
+  const newTheme = theme.isDark ? getThemeById('light') : getThemeById('dark');
+  appEvents.publish(new ThemeChangedEvent(newTheme));
+};

@@ -1,29 +1,22 @@
-import Dropdown from './Dropdown';
 import { basic, lenses, multi } from './_examples';
-import { CSSProperties, useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { StateContext } from '../../state';
+import { Select } from '@grafana/ui';
 
-const styles: { [name: string]: CSSProperties } = {
-  dropdown: {
-    margin: '0 0',
-    minWidth: '180px',
-    borderRadius: '20px',
-    textAlign: 'center' as const,
-  },
+const examples: Record<string, any> = {
+  basic,
+  multi,
+  lenses,
 };
 
-interface Props {
-  style: CSSProperties;
-}
+const options = [
+  { label: 'Basic example', value: 'basic' },
+  { label: 'Multiple versions', value: 'multi' },
+  { label: 'With lenses', value: 'basic' },
+];
 
-const Examples = ({ style }: Props) => {
+const Examples = () => {
   const { setInput, setLineage } = useContext(StateContext);
-
-  const examples: { [name: string]: { lineage: string; input: string } } = {
-    'Basic example': basic,
-    'Multiple versions': multi,
-    'With lenses': lenses,
-  };
   const [example, setExample] = useState<string>(Object.keys(examples)[0]);
 
   useEffect(() => {
@@ -33,14 +26,12 @@ const Examples = ({ style }: Props) => {
   }, [example]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <div style={style}>
-      <Dropdown
-        id="example"
-        style={styles.dropdown}
-        options={Object.keys(examples)}
-        onChange={(ex: string) => setExample(ex)}
-      />
-    </div>
+    <Select
+      width={20}
+      options={options}
+      defaultValue={options.find((opt) => opt.value === example)}
+      onChange={(ex) => setExample(ex.value!)}
+    />
   );
 };
 
