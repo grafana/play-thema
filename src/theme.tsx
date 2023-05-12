@@ -11,6 +11,7 @@ type ThemeObject = {
   name: string;
   build: () => GrafanaTheme2;
 };
+
 const themeRegistry: ThemeObject[] = [
   { id: 'system', name: 'System preference', build: getSystemPreferenceTheme },
   { id: 'dark', name: 'Dark', build: () => createTheme({ colors: { mode: 'dark' } }) },
@@ -39,7 +40,7 @@ export const ThemeProvider = ({ children }: React.PropsWithChildren) => {
     });
 
     return () => sub.unsubscribe();
-  }, []);
+  }, [theme.name]);
   return <ThemeContext.Provider value={theme}>{children}</ThemeContext.Provider>;
 };
 

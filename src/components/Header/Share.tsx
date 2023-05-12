@@ -22,7 +22,7 @@ const Share = () => {
         setLineage(lineage || '');
       })
       .catch((err: string) => publish({ stderr: err }));
-  }, []);
+  }, [setInput, setLineage]);
 
   const shareFn = () => {
     storeState({ input, lineage }).then((id) => {

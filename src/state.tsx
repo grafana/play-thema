@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { useCallback, useReducer } from 'react';
 
 export interface State {
   input: string;
@@ -43,8 +43,11 @@ export const StateContext: React.Context<State> = React.createContext(initialSta
 export const StateProvider = (props: React.PropsWithChildren) => {
   const [{ input, lineage }, dispatch] = useReducer(stateReducer, initialState);
 
-  const setInput = (input: string) => dispatch({ type: StateActionKind.INPUT, payload: input });
-  const setLineage = (lineage: string) => dispatch({ type: StateActionKind.LINEAGE, payload: lineage });
+  const setInput = useCallback((input: string) => dispatch({ type: StateActionKind.INPUT, payload: input }), []);
+  const setLineage = useCallback(
+    (lineage: string) => dispatch({ type: StateActionKind.LINEAGE, payload: lineage }),
+    []
+  );
 
   const state: State = {
     input: input || '',

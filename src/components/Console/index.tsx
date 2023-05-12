@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Terminal, { ColorMode, TerminalInput, TerminalOutput } from 'react-terminal-ui';
 import { subscribe } from '../../services/terminal';
 import { Theme } from '../../theme';

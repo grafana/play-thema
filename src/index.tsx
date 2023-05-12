@@ -5,7 +5,6 @@ import { StateProvider } from './state';
 import { getWebInstrumentations, initializeFaro } from '@grafana/faro-web-sdk';
 import { TracingInstrumentation } from '@grafana/faro-web-tracing';
 import { ReactIntegration } from '@grafana/faro-react';
-import React from 'react';
 import { ThemeProvider } from './theme';
 
 const element = document.getElementById('root');

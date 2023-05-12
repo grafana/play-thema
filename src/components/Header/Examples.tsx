@@ -23,7 +23,7 @@ const Examples = () => {
     const { lineage, input } = examples[example];
     setInput(input);
     setLineage(lineage);
-  }, [example]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [example, setInput, setLineage]);
 
   return (
     <Select
