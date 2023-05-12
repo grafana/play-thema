@@ -31,7 +31,9 @@ const Header = () => {
         <div className={styles.flex}>
           <Examples />
           <Share />
-          <Button onClick={formatFn}>Format</Button>
+          <Button onClick={formatFn} variant={'secondary'}>
+            Format
+          </Button>
           <OpSelector />
         </div>
         <ThemeSwitch className={styles.themeSwitch} />

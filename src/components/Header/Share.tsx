@@ -35,7 +35,7 @@ const Share = () => {
 
   return (
     <>
-      <Button ref={buttonRef} onClick={shareFn}>
+      <Button ref={buttonRef} onClick={shareFn} variant={'secondary'}>
         Share
       </Button>
       {showCopySuccess && (
