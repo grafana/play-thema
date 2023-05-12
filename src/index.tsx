@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './components/App';
+import App from './App';
 import { ThemeContext, ThemeProvider } from './theme';
 import { StateProvider } from './state';
 import { getWebInstrumentations, initializeFaro } from '@grafana/faro-web-sdk';

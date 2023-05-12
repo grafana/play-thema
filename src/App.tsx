@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
 import './App.css';
-import CodeEditor from './CodeEditor';
-import Header from './Header';
-import Column from './Column';
-import Console from './Console';
-import { ThemeContext } from '../theme';
-import { StateContext } from '../state';
+import CodeEditor from './components/CodeEditor';
+import Header from './components/Header';
+import Column from './components/Column';
+import Console from './components/Console';
+import { ThemeContext } from './theme';
+import { StateContext } from './state';
 
 const App = () => {
   const { theme } = useContext(ThemeContext);

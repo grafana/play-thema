@@ -87,7 +87,7 @@ body {
 /* Header styles */
 
 .header h3:before {
-  background-image: url('../../public/grafana.svg');
+  background-image: url('../public/grafana.svg');
   background-size: 20px 20px;
   display: inline-block;
   width: 20px;
