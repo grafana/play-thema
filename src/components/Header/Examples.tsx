@@ -12,7 +12,7 @@ const examples: Record<string, any> = {
 const options = [
   { label: 'Basic example', value: 'basic' },
   { label: 'Multiple versions', value: 'multi' },
-  { label: 'With lenses', value: 'basic' },
+  { label: 'With lenses', value: 'lenses' },
 ];
 
 const Examples = () => {

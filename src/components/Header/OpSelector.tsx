@@ -1,44 +1,33 @@
 import { TranslateToLatest, TranslateToVersion, ValidateAny, ValidateVersion, Versions } from '../../services/wasm';
-import React, { CSSProperties, useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useDebounce } from '../../hooks';
-import Dropdown from './Dropdown';
 import { StateContext } from '../../state';
+import { Button, Select } from '@grafana/ui';
+import { GrafanaTheme2 } from '@grafana/data';
+import { css } from '@emotion/css';
+import { useStyles } from '../../theme';
 
-const styles: { [name: string]: CSSProperties } = {
-  opSelector: {
-    gap: '10px',
-    display: 'flex',
-  },
-  dropdown: {
-    margin: '0 0',
-    minWidth: '60px',
-    borderRadius: '20px',
-    textAlign: 'center' as const,
-  },
-  play: {
-    margin: '5px 0',
-    minWidth: '50px',
-    color: '#3d71d9',
-    cursor: 'pointer',
-  },
-};
+const options = [
+  { label: 'Validate Any', value: 'validateAny' },
+  { label: 'Validate Version', value: 'validateVersion' },
+  { label: 'Translate to latest', value: 'translateToLatest' },
+  { label: 'Translate to version', value: 'translateToVersion' },
+];
 
 const OpSelector = () => {
   const { lineage, input } = useContext(StateContext);
-
   const [version, setVersion] = useState<string>('');
-
-  const ops: { [name: string]: () => void } = {
-    ValidateAny: () => ValidateAny(lineage, input),
-    ValidateVersion: () => ValidateVersion(lineage, input, version),
-    TranslateToLatest: () => TranslateToLatest(lineage, input),
-    TranslateToVersion: () => TranslateToVersion(lineage, input, version),
-  };
-
   const [versions, setVersions] = useState<string[]>([]);
-  const [operation, setOperation] = useState<string>(Object.keys(ops)[0]);
-
+  const [operation, setOperation] = useState<string>();
   const debouncedLineage: string = useDebounce<string>(lineage, 500);
+  const styles = useStyles(getStyles);
+
+  const operations: { [name: string]: () => void } = {
+    validateAny: () => ValidateAny(lineage, input),
+    validateVersion: () => ValidateVersion(lineage, input, version),
+    translateToLatest: () => TranslateToLatest(lineage, input),
+    translateToVersion: () => TranslateToVersion(lineage, input, version),
+  };
 
   useEffect((): void => {
     const versions: string[] = Versions(debouncedLineage);
@@ -49,35 +38,42 @@ const OpSelector = () => {
 
   const versionDropDisabled = versions.length === 0 || operation === 'ValidateAny' || operation === 'TranslateToLatest';
 
-  const play = () => ops[operation]();
+  const runOperation = () => {
+    if (!operation) {
+      return;
+    }
+    operations[operation]();
+  };
 
   return (
-    <div style={styles.opSelector}>
-      <Dropdown
-        id="operation"
-        style={styles.dropdown}
-        options={Object.keys(ops)}
-        onChange={(op: string) => setOperation(op)}
-      />
-      <Dropdown
-        id="version"
-        style={styles.dropdown}
+    <div className={styles.container}>
+      <Select options={options} onChange={(op) => setOperation(op.value!)} placeholder={'Select operation'} />
+      <Select
+        placeholder={'Choose version'}
         disabled={versionDropDisabled}
-        options={versions}
-        onChange={(ver: string) => setVersion(ver)}
+        options={Versions(debouncedLineage).map((v) => ({ label: v, value: v }))}
+        onChange={(ver) => setVersion(ver.value!)}
       />
-      <div style={styles.play} onClick={play}>
-        <IconPlay />
-      </div>
+      <Button disabled={!operation} onClick={runOperation}>
+        Run
+      </Button>
     </div>
   );
 };
 
 export default OpSelector;
 
-const IconPlay = () => (
-  <svg viewBox="0 0 24 24" fill="currentColor" height="1.8em" width="3em">
-    <path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z" />
-    <path d="M9 17l8-5-8-5z" />
-  </svg>
-);
+const getStyles = (theme: GrafanaTheme2) => {
+  return {
+    container: css`
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      min-width: 450px;
+
+      & > * {
+        margin-right: ${theme.spacing(2)};
+      }
+    `,
+  };
+};

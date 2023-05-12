@@ -27,11 +27,15 @@ const Header = () => {
         <img src={'/grafana.svg'} alt={'Grafana logo'} className={styles.logo} />
         <h4 className={styles.headerText}>Thema Playground</h4>
       </div>
-      <Share />
-      <OpSelector />
-      <Button onClick={formatFn}>Format</Button>
-      <Examples />
-      <ThemeSwitch className={styles.themeSwitch} />
+      <div className={styles.flex}>
+        <div className={styles.flex}>
+          <Examples />
+          <Share />
+          <Button onClick={formatFn}>Format</Button>
+          <OpSelector />
+        </div>
+        <ThemeSwitch className={styles.themeSwitch} />
+      </div>
     </div>
   );
 };
@@ -41,6 +45,10 @@ const getStyles = (theme: GrafanaTheme2) => {
     flex: css`
       display: flex;
       align-items: center;
+
+      & > * {
+        margin-right: ${theme.spacing(2)};
+      }
     `,
     header: css`
       display: flex;
@@ -55,17 +63,7 @@ const getStyles = (theme: GrafanaTheme2) => {
       color: ${theme.colors.text.primary};
     `,
     headerText: css`
-      margin: 0;
-    `,
-    input: css`
-      width: 250px;
-      font-size: 15px;
-      margin: 1px 0;
-    `,
-    examples: css`
-      margin-left: 10vw;
-      margin-right: 1vw;
-      display: flex;
+      margin-bottom: 0;
     `,
     themeSwitch: css`
       color: #3d71d9;
