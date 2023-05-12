@@ -1,4 +1,4 @@
-import React, { CSSProperties, useContext } from 'react';
+import { useContext } from 'react';
 import OpSelector from './OpSelector';
 import { fmtCue, fmtJson } from '../../services/format';
 import { tryOrReport } from '../../helpers';
@@ -23,7 +23,10 @@ const Header = () => {
 
   return (
     <div className={styles.header}>
-      <h3>Thema Playground</h3>
+      <div className={styles.flex}>
+        <img src={'/grafana.svg'} alt={'Grafana logo'} className={styles.logo} />
+        <h4 className={styles.headerText}>Thema Playground</h4>
+      </div>
       <Share />
       <OpSelector />
       <Button onClick={formatFn}>Format</Button>
@@ -35,8 +38,14 @@ const Header = () => {
 
 const getStyles = (theme: GrafanaTheme2) => {
   return {
+    flex: css`
+      display: flex;
+      align-items: center;
+    `,
     header: css`
       display: flex;
+      align-items: center;
+      justify-content: space-between;
       gap: 20px;
       height: 60px;
       width: 100vw;
@@ -44,6 +53,9 @@ const getStyles = (theme: GrafanaTheme2) => {
       border: 1px solid ${theme.colors.border.weak};
       border-radius: 2px;
       color: ${theme.colors.text.primary};
+    `,
+    headerText: css`
+      margin: 0;
     `,
     input: css`
       width: 250px;
@@ -58,6 +70,11 @@ const getStyles = (theme: GrafanaTheme2) => {
     themeSwitch: css`
       color: #3d71d9;
       cursor: pointer;
+    `,
+    logo: css`
+      width: 20px;
+      height: 20px;
+      margin-right: 10px;
     `,
   };
 };

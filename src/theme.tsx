@@ -62,6 +62,7 @@ function getSystemPreferenceTheme() {
   return getThemeById(id);
 }
 
+// TODO store selected theme in the local storage
 export function getThemeById(id: string): GrafanaTheme2 {
   const theme = themeRegistry.find((theme) => theme.id === id);
   if (theme) {
