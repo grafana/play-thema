@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { createTheme, GrafanaTheme2 } from '@grafana/data';
+import memoizeOne from 'memoize-one';
 
 type ThemeObject = {
   id: string;
@@ -17,7 +18,7 @@ export enum Theme {
   light = 'light',
 }
 
-type ThemeContextType = [GrafanaTheme2 | undefined, () => void];
+type ThemeContextType = [GrafanaTheme2, () => void];
 
 export const ThemeContext = React.createContext<ThemeContextType>([getThemeById(''), () => {}]);
 
@@ -38,6 +39,12 @@ export function useThemeContext() {
   return context;
 }
 
+export const useTheme = () => {
+  const [theme] = useThemeContext();
+
+  return theme;
+};
+
 function getSystemPreferenceTheme() {
   const mediaResult = window.matchMedia('(prefers-color-scheme: dark)');
   const id = mediaResult.matches ? 'dark' : 'light';
@@ -51,4 +58,18 @@ export function getThemeById(id: string): GrafanaTheme2 {
   }
 
   return getSystemPreferenceTheme();
+}
+
+export const memoizedStyleCreators = new WeakMap();
+
+export function useStyles<T>(getStyles: (theme: GrafanaTheme2) => T) {
+  const theme = useTheme();
+
+  let memoizedStyleCreator = memoizedStyleCreators.get(getStyles) as typeof getStyles;
+  if (!memoizedStyleCreator) {
+    memoizedStyleCreator = memoizeOne(getStyles);
+    memoizedStyleCreators.set(getStyles, memoizedStyleCreator);
+  }
+
+  return memoizedStyleCreator(theme);
 }

@@ -4,15 +4,17 @@ import CodeEditor from './components/CodeEditor';
 import Header from './components/Header';
 import Column from './components/Column';
 import Console from './components/Console';
-import { useTheme2 } from '@grafana/ui';
 import { StateContext } from './state';
+import { GrafanaTheme2 } from '@grafana/data';
+import { css } from '@emotion/css';
+import { useStyles } from './theme';
 
 const App = () => {
-  const theme = useTheme2().name.toLowerCase();
+  const styles = useStyles(getStyles);
   const { input, lineage, setInput, setLineage } = useContext(StateContext);
 
   return (
-    <div className={`App theme-${theme}`} style={{ display: 'flex', flexWrap: 'wrap', alignContent: 'flex-start' }}>
+    <div className={styles.container}>
       <Header />
       <Column title="LINEAGE (CUE)" color="green">
         <CodeEditor value={lineage} language="go" onChange={(lineage?: string) => setLineage(lineage || '')} />
@@ -25,6 +27,19 @@ const App = () => {
       </Column>
     </div>
   );
+};
+
+const getStyles = (theme: GrafanaTheme2) => {
+  return {
+    container: css`
+      display: flex;
+      flex-wrap: wrap;
+      background: ${theme.colors.background.primary};
+      height: 100vh;
+      text-align: center;
+      font-family: Inter, Helvetica, Arial, sans-serif;
+    `,
+  };
 };
 
 export default App;
