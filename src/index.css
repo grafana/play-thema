@@ -30,6 +30,7 @@ code {
     font-size: 16px !important;
     min-height: 100px;
     padding: 50px 45px 5px !important;
+    background: inherit !important;
 }
 
 .react-terminal-input {
