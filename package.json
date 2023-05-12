@@ -10,7 +10,7 @@
     "@grafana/faro-react": "^1.0.2",
     "@grafana/faro-web-sdk": "^1.0.2",
     "@grafana/faro-web-tracing": "^1.0.2",
-    "@grafana/ui": "9.4.7",
+    "@grafana/ui": "^9.5.2",
     "@monaco-editor/react": "4.4.6",
     "monaco-editor": "0.36.1",
     "nanoid": "4.0.1",
@@ -20,7 +20,6 @@
     "react-terminal-ui": "1.0.1"
   },
   "devDependencies": {
-    "@grafana/toolkit": "^9.4.7",
     "@testing-library/jest-dom": "5.14.1",
     "@testing-library/react": "13.0.0",
     "@testing-library/user-event": "13.2.1",
