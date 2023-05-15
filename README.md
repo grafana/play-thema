@@ -1,14 +1,11 @@
 # Thema Playground
 
-Thema Playground is an online service that allows users to write and run [Thema](https://github.com/grafana/thema) code
-in a safe and sandboxed environment.
-It's accessible via a web browser (available at [grafana.github.io/play-thema](grafana.github.io/play-thema)), and it
-doesn't require you to install [Thema](https://github.com/grafana/thema) on your own computer.
+Thema Playground is an online service that provides a safe and sandboxed environment for users to write and execute [Thema](https://github.com/grafana/thema) code. Accessible via a web browser at [grafana.github.io/play-thema](https://grafana.github.io/play-thema), it eliminates the need for users to install [Thema](https://github.com/grafana/thema) on their personal computers.
 
-It is primarily used for sharing and running Thema snippets.
-So, you can write Thema code, compile and run it, and see the output directly in the web interface.
-It's particularly useful for demonstrating Thema code behavior, asking for help with Thema code, learning the Thema
-language or its [operations](https://github.com/grafana/thema/blob/main/docs/overview.md#about-thema-operations).
+It is primarily designed for sharing and executing Thema snippets. 
+It allows you to write Thema code, compile, and run it, with the output being displayed directly within the web interface. 
+It's a particularly valuable tool for demonstrating the behavior of Thema code, seeking assistance with Thema-related challenges, or learning the intricacies of the Thema language, including its [operations](https://github.com/grafana/thema/blob/main/docs/overview.md#about-thema-operations).
+
 
 ## Development
 
@@ -28,7 +25,7 @@ To set up and run this project locally, you will need the following dependencies
     ```bash
     make deps
     ```
-3. Build the WASM artifact from Go code
+3. Build the WASM artifact from the Go source code
     ```bash
     make wasm
     ```
@@ -38,27 +35,8 @@ To set up and run this project locally, you will need the following dependencies
     ```
    This will start the development server on [localhost:3000](http://localhost:3000).
 
-Alternatively, you can just run `make run` after having installed the dependencies, which does steps 3 and 4 in a single shot.
+Alternatively, after installing the necessary dependencies, you can run `make run`. This command performs steps 3 and 4 in a single operation.
 
-### Running the project locally
-
-1. Clone the [Thema Playground](https://github.com/grafana/play-thema) repository.
-
-2. Install the application dependencies:
-    ```bash
-    make deps
-    ```
-3. Build the WASM artifact from Go code
-    ```bash
-    make wasm
-    ```
-4. Run the application
-    ```bash
-    make start
-    ```
-   This will start the development server on [localhost:3000](http://localhost:3000).
-
-Alternatively, you can just run `make run` after having installed the dependencies, which does steps 3 and 4 in a single shot.
 
 ## Deployment
 
