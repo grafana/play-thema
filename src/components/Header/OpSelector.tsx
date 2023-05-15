@@ -36,7 +36,7 @@ const OpSelector = () => {
     setVersion(versions.length > 0 ? versions[0] : '');
   }, [debouncedLineage]);
 
-  const versionDropDisabled = versions.length === 0 || operation === 'ValidateAny' || operation === 'TranslateToLatest';
+  const versionDropDisabled = versions.length === 0 || ['validateAny', 'translateToLatest'].includes(operation || '');
 
   const runOperation = () => {
     if (!operation) {
