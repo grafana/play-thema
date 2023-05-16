@@ -1,7 +1,21 @@
-import { useEffect, useRef } from 'react';
+import { useCallback, useMemo, useRef } from 'react';
 import * as monaco from 'monaco-editor';
 import Editor, { Monaco } from '@monaco-editor/react';
 import { Theme, useTheme } from '../../theme';
+
+const defaultOpts: monaco.editor.IStandaloneEditorConstructionOptions = {
+  fontSize: 15,
+  minimap: { enabled: false },
+  scrollbar: {
+    vertical: 'hidden',
+    horizontal: 'hidden',
+  },
+};
+
+const readOnlyOpts: monaco.editor.IStandaloneEditorConstructionOptions = {
+  readOnly: true,
+  lineNumbers: 'off',
+};
 
 interface Props {
   value: string;
@@ -11,77 +25,45 @@ interface Props {
 }
 
 const CodeEditor = ({ value, onChange, isReadOnly, language }: Props) => {
-  // Monaco / Editor
   const editorRef = useRef<null | monaco.editor.IStandaloneCodeEditor>(null);
   const monacoRef = useRef<null | Monaco>(null);
 
   const theme = useTheme();
-  const editorTheme = theme.name.toLowerCase() === Theme.dark ? 'thema-dark' : 'thema-light';
+  const editorTheme = useMemo(() => (theme.name.toLowerCase() === Theme.dark ? 'thema-dark' : 'thema-light'), [theme]);
 
-  useEffect(() => {
-    if (theme.isDark) {
-      monaco.editor.defineTheme('thema-dark', {
-        base: 'vs-dark',
-        inherit: true,
-        rules: [],
-        colors: {
-          'editor.background': theme.colors.background.secondary,
-        },
-      });
-    } else {
-      monaco.editor.defineTheme('thema-light', {
-        base: 'vs',
-        inherit: true,
-        rules: [],
-        colors: {
-          'editor.background': '#F4F5F5',
-        },
-      });
-    }
+  const handleEditorDidMount = useCallback(
+    (editor: monaco.editor.IStandaloneCodeEditor, monaco: Monaco) => {
+      const themeDefinition: monaco.editor.IStandaloneThemeData = theme.isDark
+        ? {
+            base: 'vs-dark',
+            inherit: true,
+            rules: [],
+            colors: {
+              'editor.background': theme.colors.background.secondary,
+            },
+          }
+        : {
+            base: 'vs',
+            inherit: true,
+            rules: [],
+            colors: {
+              'editor.background': '#F4F5F5',
+            },
+          };
 
-    monaco.editor.setTheme(editorTheme);
-  }, [theme]);
+      monaco.editor.defineTheme(editorTheme, themeDefinition);
+      monaco.editor.setTheme(editorTheme);
 
-  const handleEditorDidMount = (editor: monaco.editor.IStandaloneCodeEditor, monaco: Monaco) => {
-    editorRef.current = editor;
-    monacoRef.current = monaco;
-
-    monaco.editor.defineTheme('thema-dark', {
-      base: 'vs-dark',
-      inherit: true,
-      rules: [],
-      colors: {
-        'editor.background': theme.colors.background.secondary,
-      },
-    });
-
-    monaco.editor.defineTheme('thema-light', {
-      base: 'vs',
-      inherit: true,
-      rules: [],
-      colors: {
-        'editor.background': '#F4F5F5',
-      },
-    });
-
-    monaco.editor.setTheme(editorTheme);
-  };
-
-  const defaultOpts: monaco.editor.IStandaloneEditorConstructionOptions = {
-    fontSize: 15,
-    minimap: { enabled: false },
-    scrollbar: {
-      vertical: 'hidden',
-      horizontal: 'hidden',
+      editorRef.current = editor;
+      monacoRef.current = monaco;
     },
-  };
+    [editorTheme, theme]
+  );
 
-  const readOnlyOpts: monaco.editor.IStandaloneEditorConstructionOptions = {
-    readOnly: true,
-    lineNumbers: 'off',
-  };
-
-  const opts = isReadOnly ? { ...defaultOpts, ...readOnlyOpts } : defaultOpts;
+  const opts = useMemo(
+    () => (isReadOnly ? { ...defaultOpts, ...readOnlyOpts } : defaultOpts),
+    [isReadOnly, defaultOpts, readOnlyOpts]
+  );
 
   return (
     <Editor

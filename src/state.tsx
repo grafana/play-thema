@@ -1,60 +1,46 @@
-import React, { useCallback, useReducer } from 'react';
+import React, { useContext, useState } from 'react';
 
 export interface State {
   input: string;
-  setInput: (input: string) => void;
+  setInput: (input?: string) => void;
 
   lineage: string;
   setLineage: (lineage: string) => void;
 }
 
-const initialState: State = {
-  input: '',
-  setInput: (_: string): void => {},
+const InputContext = React.createContext({ input: '', setInput: (_: string) => {} });
+const LineageContext = React.createContext({ lineage: '', setLineage: (_: string) => {} });
 
-  lineage: '',
-  setLineage: (_: string): void => {},
+// Input state provider
+export const InputProvider = ({ children }: React.PropsWithChildren) => {
+  const [input, setInput] = useState('');
+
+  // Remember to pass the state and the updater function to the provider
+  return <InputContext.Provider value={{ input, setInput }}>{children}</InputContext.Provider>;
 };
 
-enum StateActionKind {
-  INPUT = 'INPUT',
-  LINEAGE = 'LINEAGE',
+// Lineage state provider
+export const LineageProvider = ({ children }: React.PropsWithChildren) => {
+  const [lineage, setLineage] = useState('');
+
+  // Remember to pass the state and the updater function to the provider
+  return <LineageContext.Provider value={{ lineage, setLineage }}>{children}</LineageContext.Provider>;
+};
+
+// Input state hook
+export function useInputContext() {
+  const context = useContext(InputContext);
+  if (!context) {
+    throw new Error('useInputContext must be used within the InputProvider');
+  }
+  return context;
 }
 
-interface StateAction {
-  type: StateActionKind;
-  payload: string;
+// Lineage state hook
+export function useLineageContext() {
+  const context = useContext(LineageContext);
+  if (!context) {
+    throw new Error('useLineageContext must be used within the LineageProvider');
+  }
+  return context;
 }
-
-const stateReducer = (state: Partial<State>, { type, payload }: StateAction): Partial<State> => {
-  if (type === StateActionKind.INPUT) {
-    return { ...state, input: payload };
-  }
-
-  if (type === StateActionKind.LINEAGE) {
-    return { ...state, lineage: payload };
-  }
-
-  return state;
-};
-
-export const StateContext: React.Context<State> = React.createContext(initialState);
-
-export const StateProvider = (props: React.PropsWithChildren) => {
-  const [{ input, lineage }, dispatch] = useReducer(stateReducer, initialState);
-
-  const setInput = useCallback((input: string) => dispatch({ type: StateActionKind.INPUT, payload: input }), []);
-  const setLineage = useCallback(
-    (lineage: string) => dispatch({ type: StateActionKind.LINEAGE, payload: lineage }),
-    []
-  );
-
-  const state: State = {
-    input: input || '',
-    lineage: lineage || '',
-    setInput,
-    setLineage,
-  };
-
-  return <StateContext.Provider value={state}>{props.children}</StateContext.Provider>;
-};

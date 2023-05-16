@@ -1,6 +1,6 @@
 import { basic, lenses, multi } from './_examples';
-import { useContext, useEffect, useState } from 'react';
-import { StateContext } from '../../state';
+import { useEffect, useState } from 'react';
+import { useInputContext, useLineageContext } from '../../state';
 import { Select } from '@grafana/ui';
 
 const examples: Record<string, any> = {
@@ -16,7 +16,8 @@ const options = [
 ];
 
 const Examples = () => {
-  const { setInput, setLineage } = useContext(StateContext);
+  const { setLineage } = useLineageContext();
+  const { setInput } = useInputContext();
   const [example, setExample] = useState<string>(Object.keys(examples)[0]);
 
   useEffect(() => {

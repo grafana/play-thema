@@ -1,26 +1,24 @@
-import React, { useContext } from 'react';
-import CodeEditor from './components/CodeEditor';
 import Header from './components/Header';
 import Column from './components/Column';
 import Console from './components/Console';
-import { StateContext } from './state';
 import { GrafanaTheme2 } from '@grafana/data';
 import { css } from '@emotion/css';
 import { useStyles } from './theme';
+import { InputEditor } from './components/CodeEditor/InputEditor';
+import { LineageEditor } from './components/CodeEditor/LineageEditor';
 
 const App = () => {
   const styles = useStyles(getStyles);
-  const { input, lineage, setInput, setLineage } = useContext(StateContext);
 
   return (
     <div className={styles.container}>
       <Header />
       <div className={styles.wrapper}>
         <Column title="LINEAGE (CUE)" color="green">
-          <CodeEditor value={lineage} language="go" onChange={(lineage?: string) => setLineage(lineage || '')} />
+          <LineageEditor />
         </Column>
         <Column title="INPUT DATA (JSON)" color="green">
-          <CodeEditor value={input} language="json" onChange={(input?: string) => setInput(input || '')} />
+          <InputEditor />
         </Column>
         <Column title="OUTPUT" color="darkblue">
           <Console />

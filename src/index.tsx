@@ -1,7 +1,7 @@
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import { StateProvider } from './state';
+import { InputProvider, LineageProvider } from './state';
 import { getWebInstrumentations, initializeFaro } from '@grafana/faro-web-sdk';
 import { TracingInstrumentation } from '@grafana/faro-web-tracing';
 import { ReactIntegration } from '@grafana/faro-react';
@@ -12,9 +12,11 @@ if (element) {
   const root: ReactDOM.Root = ReactDOM.createRoot(element);
   root.render(
     <ThemeProvider>
-      <StateProvider>
-        <App />
-      </StateProvider>
+      <InputProvider>
+        <LineageProvider>
+          <App />
+        </LineageProvider>
+      </InputProvider>
     </ThemeProvider>
   );
 }
