@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useDebounce } from '../../hooks';
 import { useInputContext, useLineageContext } from '../../state';
 import { Button, Select } from '@grafana/ui';
-import { GrafanaTheme2 } from '@grafana/data';
+import { GrafanaTheme2, SelectableValue } from '@grafana/data';
 import { css } from '@emotion/css';
 import { useStyles } from '../../theme';
 
@@ -49,12 +49,7 @@ const OpSelector = () => {
   return (
     <div className={styles.container}>
       <Select options={options} onChange={(op) => setOperation(op.value!)} placeholder={'Select operation'} />
-      <Select
-        placeholder={'Choose version'}
-        disabled={versionDropDisabled}
-        options={Versions(debouncedLineage).map((v) => ({ label: v, value: v }))}
-        onChange={(ver) => setVersion(ver.value!)}
-      />
+      <VersionsSelect setVersion={setVersion} disabled={versionDropDisabled} options={versions} />
       <Button disabled={!operation} onClick={runOperation}>
         Run
       </Button>
@@ -63,6 +58,27 @@ const OpSelector = () => {
 };
 
 export default OpSelector;
+
+interface VersionsSelectProps {
+  setVersion: (version: string) => void;
+  disabled: boolean;
+  options: string[];
+}
+const VersionsSelect = ({ setVersion, disabled, options }: VersionsSelectProps) => {
+  const onChange = (version: SelectableValue<string>) => {
+    if (version?.value) {
+      setVersion(version.value);
+    }
+  };
+  return (
+    <Select
+      placeholder={'Choose version'}
+      disabled={disabled}
+      options={options.map((v: string) => ({ label: v, value: v }))}
+      onChange={onChange}
+    />
+  );
+};
 
 const getStyles = (theme: GrafanaTheme2) => {
   return {

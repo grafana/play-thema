@@ -12,7 +12,6 @@ import { Button } from '@grafana/ui';
 
 const Header = () => {
   const styles = useStyles(getStyles);
-
   return (
     <div className={styles.header}>
       <div className={styles.flex}>
