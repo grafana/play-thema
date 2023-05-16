@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
 import Terminal, { ColorMode, TerminalInput, TerminalOutput } from 'react-terminal-ui';
 import { subscribe } from '../../services/terminal';
-import { Theme } from '../../theme';
+import { Theme, useTheme } from '../../theme';
 import { nanoid } from 'nanoid';
-import { useTheme2 } from '@grafana/ui';
 
 interface ConsoleInput {
   stdout: TerminalInput[];
@@ -15,7 +14,7 @@ const defaultConsoleInput = (): ConsoleInput => {
 };
 
 const Console = () => {
-  const theme = useTheme2();
+  const theme = useTheme();
   const color = theme.name.toLowerCase() === Theme.light ? ColorMode.Light : ColorMode.Dark;
   const [input, setInput] = useState<ConsoleInput>(defaultConsoleInput());
 
