@@ -22,11 +22,16 @@ const Console = () => {
   useEffect(() => {
     subscribe(({ stderr, stdout }) => {
       const inp: ConsoleInput = defaultConsoleInput();
-      if (stderr) inp.stderr.push(<TerminalInput key={nanoid()}>{stderr}</TerminalInput>);
-      if (stdout) inp.stdout.push(<TerminalInput key={nanoid()}>{stdout}</TerminalInput>);
-      setInput(inp);
+      if (stderr) {
+        inp.stderr.push(<TerminalInput key={nanoid()}>{stderr}</TerminalInput>);
+        setInput(inp);
+      }
+      if (stdout) {
+        inp.stdout.push(<TerminalInput key={nanoid()}>{stdout}</TerminalInput>);
+        setInput(inp);
+      }
     });
-  });
+  }, []);
 
   return (
     <Terminal name="Console" colorMode={color}>

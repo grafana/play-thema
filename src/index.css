@@ -45,6 +45,10 @@ code {
     margin: 5px auto 15px auto;
 }
 
+.react-terminal-line {
+    white-space: pre-line;
+}
+
 @keyframes typing {
     from {
         width: 0;
