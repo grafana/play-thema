@@ -3,7 +3,7 @@ import { publish } from '../services/terminal';
 export const tryOrReport = <T extends Function>(fn: T, ok?: boolean) => {
   try {
     const res = fn();
-    if (ok) publish({ stdout: 'OK' });
+    if (ok) {publish({ stdout: 'OK' });}
     return res;
   } catch (e: unknown) {
     if (e instanceof Error || e instanceof SyntaxError) {

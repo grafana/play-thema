@@ -1,7 +1,8 @@
-import { basic, lenses, multi } from './_examples';
-import { useEffect, useState } from 'react';
-import { useInputContext, useLineageContext } from '../../state';
 import { Select } from '@grafana/ui';
+import { useEffect, useState } from 'react';
+
+import { useInputContext, useLineageContext } from '../../state';
+import { basic, lenses, multi } from './_examples';
 
 const examples: Record<string, any> = {
   basic,

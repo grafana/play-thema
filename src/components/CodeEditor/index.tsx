@@ -1,6 +1,7 @@
-import { useCallback, useMemo, useRef } from 'react';
-import * as monaco from 'monaco-editor';
 import Editor, { Monaco } from '@monaco-editor/react';
+import * as monaco from 'monaco-editor';
+import { useCallback, useMemo, useRef } from 'react';
+
 import { Theme, useTheme } from '../../theme';
 
 const defaultOpts: monaco.editor.IStandaloneEditorConstructionOptions = {
