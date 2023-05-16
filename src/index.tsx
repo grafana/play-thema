@@ -59,6 +59,6 @@ if (process.env.NODE_ENV === 'production') {
       new ReactIntegration(),
     ],
   });
-
+  // eslint-disable-next-line no-console
   console.info('Faro was initialized');
 }

@@ -1,6 +1,7 @@
 {
   "extends": [
-    "@grafana/eslint-config"
+    "react-app",
+    "react-app/jest"
   ],
   "plugins": [
     "simple-import-sort"

@@ -1,5 +1,4 @@
-import { BusEventWithPayload, createTheme, GrafanaTheme2 } from '@grafana/data';
-import { EventBusExtended, EventBusSrv } from '@grafana/data';
+import { BusEventWithPayload, createTheme, EventBusExtended, EventBusSrv, GrafanaTheme2 } from '@grafana/data';
 import { ThemeContext } from '@grafana/ui';
 import memoizeOne from 'memoize-one';
 import React, { useContext, useEffect, useState } from 'react';
