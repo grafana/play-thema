@@ -1,10 +1,9 @@
-import { useContext } from 'react';
 import OpSelector from './OpSelector';
 import { fmtCue, fmtJson } from '../../services/format';
 import { tryOrReport } from '../../helpers';
 import Examples from './Examples';
 import ThemeSwitch from './ThemeSwitch';
-import { StateContext } from '../../state';
+import { useInputContext, useLineageContext } from '../../state';
 import Share from './Share';
 import { GrafanaTheme2 } from '@grafana/data';
 import { useStyles } from '../../theme';
@@ -12,14 +11,7 @@ import { css } from '@emotion/css';
 import { Button } from '@grafana/ui';
 
 const Header = () => {
-  const { input, lineage, setInput, setLineage } = useContext(StateContext);
   const styles = useStyles(getStyles);
-  const formatFn = () => {
-    tryOrReport(() => {
-      setInput(fmtJson(input));
-      setLineage(fmtCue(lineage));
-    }, true);
-  };
 
   return (
     <div className={styles.header}>
@@ -31,14 +23,30 @@ const Header = () => {
         <div className={styles.flex}>
           <Examples />
           <Share />
-          <Button onClick={formatFn} variant={'secondary'}>
-            Format
-          </Button>
+          <FormatButton />
           <OpSelector />
         </div>
         <ThemeSwitch className={styles.themeSwitch} />
       </div>
     </div>
+  );
+};
+
+const FormatButton = () => {
+  const { input, setInput } = useInputContext();
+  const { lineage, setLineage } = useLineageContext();
+
+  const formatFn = () => {
+    tryOrReport(() => {
+      setInput(fmtJson(input));
+      setLineage(fmtCue(lineage));
+    }, true);
+  };
+
+  return (
+    <Button onClick={formatFn} variant={'secondary'}>
+      Format
+    </Button>
   );
 };
 

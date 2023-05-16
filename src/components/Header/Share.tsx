@@ -1,13 +1,14 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { fetchState, storeState } from '../../services/store';
-import { StateContext } from '../../state';
+import { useInputContext, useLineageContext } from '../../state';
 import { publish } from '../../services/terminal';
 import { Button, InlineToast } from '@grafana/ui';
 
 const hashId = () => window.location.hash.slice(1);
 
 const Share = () => {
-  const { input, lineage, setInput, setLineage } = useContext(StateContext);
+  const { input, setInput } = useInputContext();
+  const { lineage, setLineage } = useLineageContext();
   const buttonRef = useRef(null);
   const [showCopySuccess, setShowCopySuccess] = useState(false);
 

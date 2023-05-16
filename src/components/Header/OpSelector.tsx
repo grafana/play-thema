@@ -1,7 +1,7 @@
 import { TranslateToLatest, TranslateToVersion, ValidateAny, ValidateVersion, Versions } from '../../services/wasm';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDebounce } from '../../hooks';
-import { StateContext } from '../../state';
+import { useInputContext, useLineageContext } from '../../state';
 import { Button, Select } from '@grafana/ui';
 import { GrafanaTheme2 } from '@grafana/data';
 import { css } from '@emotion/css';
@@ -15,7 +15,8 @@ const options = [
 ];
 
 const OpSelector = () => {
-  const { lineage, input } = useContext(StateContext);
+  const { input } = useInputContext();
+  const { lineage } = useLineageContext();
   const [version, setVersion] = useState<string>('');
   const [versions, setVersions] = useState<string[]>([]);
   const [operation, setOperation] = useState<string>();
