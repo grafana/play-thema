@@ -50,7 +50,7 @@ const OpSelector = () => {
   return (
     <div className={styles.container}>
       <Select options={options} onChange={(op) => setOperation(op.value!)} placeholder={'Select operation'} />
-      <VersionsSelect setVersion={setVersion} disabled={versionDropDisabled} options={versions} />
+      <VersionsSelect setVersion={setVersion} disabled={versionDropDisabled} options={versions} version={version} />
       <Button disabled={!operation} onClick={runOperation}>
         Run
       </Button>
@@ -64,8 +64,9 @@ interface VersionsSelectProps {
   setVersion: (version: string) => void;
   disabled: boolean;
   options: string[];
+  version: string;
 }
-const VersionsSelect = ({ setVersion, disabled, options }: VersionsSelectProps) => {
+const VersionsSelect = ({ setVersion, disabled, options, version }: VersionsSelectProps) => {
   const onChange = (version: SelectableValue<string>) => {
     if (version?.value) {
       setVersion(version.value);
@@ -77,6 +78,7 @@ const VersionsSelect = ({ setVersion, disabled, options }: VersionsSelectProps) 
       disabled={disabled}
       options={options.map((v: string) => ({ label: v, value: v }))}
       onChange={onChange}
+      value={version}
     />
   );
 };
