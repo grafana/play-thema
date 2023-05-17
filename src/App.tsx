@@ -1,11 +1,12 @@
-import Header from './components/Header';
-import Column from './components/Column';
-import Console from './components/Console';
-import { GrafanaTheme2 } from '@grafana/data';
 import { css } from '@emotion/css';
-import { useStyles } from './theme';
+import { GrafanaTheme2 } from '@grafana/data';
+
 import { InputEditor } from './components/CodeEditor/InputEditor';
 import { LineageEditor } from './components/CodeEditor/LineageEditor';
+import Column from './components/Column';
+import Console from './components/Console';
+import Header from './components/Header';
+import { useStyles } from './theme';
 
 const App = () => {
   const styles = useStyles(getStyles);

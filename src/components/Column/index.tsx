@@ -1,7 +1,8 @@
-import { GrafanaTheme2 } from '@grafana/data';
 import { css } from '@emotion/css';
-import { useStyles } from '../../theme';
+import { GrafanaTheme2 } from '@grafana/data';
 import { PropsWithChildren } from 'react';
+
+import { useStyles } from '../../theme';
 
 interface ColumnProps {
   title: string;

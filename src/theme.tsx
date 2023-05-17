@@ -1,8 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { BusEventWithPayload, createTheme, GrafanaTheme2 } from '@grafana/data';
-import memoizeOne from 'memoize-one';
-import { EventBusSrv, EventBusExtended } from '@grafana/data';
+import { BusEventWithPayload, createTheme, EventBusExtended, EventBusSrv, GrafanaTheme2 } from '@grafana/data';
 import { ThemeContext } from '@grafana/ui';
+import memoizeOne from 'memoize-one';
+import React, { useContext, useEffect, useState } from 'react';
 
 export const appEvents: EventBusExtended = new EventBusSrv();
 

@@ -1,8 +1,9 @@
+import { nanoid } from 'nanoid';
 import { useEffect, useState } from 'react';
 import Terminal, { ColorMode, TerminalInput, TerminalOutput } from 'react-terminal-ui';
+
 import { subscribe } from '../../services/terminal';
 import { Theme, useTheme } from '../../theme';
-import { nanoid } from 'nanoid';
 
 interface ConsoleInput {
   stdout: TerminalInput[];

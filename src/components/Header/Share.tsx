@@ -1,8 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { fetchState, storeState } from '../../services/store';
-import { useInputContext, useLineageContext } from '../../state';
-import { publish } from '../../services/terminal';
 import { Button, InlineToast } from '@grafana/ui';
+import React, { useEffect, useRef, useState } from 'react';
+
+import { fetchState, storeState } from '../../services/store';
+import { publish } from '../../services/terminal';
+import { useInputContext, useLineageContext } from '../../state';
 
 const hashId = () => window.location.hash.slice(1);
 
@@ -15,7 +16,7 @@ const Share = () => {
   const shareUrl = (share?: string) => (share !== '' ? window.location.href.split('#')[0].concat(`#${share}`) : '');
 
   useEffect(() => {
-    if (hashId() === '') return;
+    if (hashId() === '') {return;}
 
     fetchState(hashId())
       .then(({ input, lineage }) => {
