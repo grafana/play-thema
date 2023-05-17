@@ -40,14 +40,19 @@ export const ThemeProvider = ({ children }: React.PropsWithChildren) => {
   const [theme, setTheme] = useState<GrafanaTheme2>(getThemeById(getDefaultThemeId()));
 
   useEffect(() => {
-    document.body.className = theme.name.toLowerCase();
+    document.body.classList.add(theme.name.toLowerCase());
     const sub = appEvents.subscribe(ThemeChangedEvent, (event) => {
       const newTheme = event.payload;
       const newThemeName = newTheme.name.toLowerCase();
       setTheme(newTheme);
       localStorage.setItem('theme', newThemeName);
-      // TODO this will break if body has other classes
-      document.body.className = newThemeName;
+      if (newThemeName === Theme.dark) {
+        document.body.classList.remove(Theme.light);
+        document.body.classList.add(Theme.dark);
+      } else {
+        document.body.classList.remove(Theme.dark);
+        document.body.classList.add(Theme.light);
+      }
     });
 
     return () => sub.unsubscribe();
@@ -69,7 +74,6 @@ function getSystemPreferenceTheme() {
   return getThemeById(id);
 }
 
-// TODO store selected theme in the local storage
 export function getThemeById(id: string): GrafanaTheme2 {
   const theme = themeRegistry.find((theme) => theme.id === id);
   if (theme) {
