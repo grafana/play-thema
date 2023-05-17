@@ -34,6 +34,10 @@ code {
     background: inherit !important;
 }
 
+.react-terminal-line {
+    white-space: pre-line !important;
+}
+
 .react-terminal-input {
     margin-bottom: 20px;
     overflow: hidden;
