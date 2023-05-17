@@ -28,6 +28,7 @@
     "@types/jest": "27.0.1",
     "@types/node": "16.7.13",
     "@types/react-dom": "18.0.0",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
     "prettier": "^2.8.6",
     "typescript": "5.0.2"
   },
@@ -36,12 +37,6 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
   },
   "browserslist": {
     "production": [

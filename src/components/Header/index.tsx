@@ -1,14 +1,15 @@
-import OpSelector from './OpSelector';
-import { fmtCue, fmtJson } from '../../services/format';
-import { tryOrReport } from '../../helpers';
-import Examples from './Examples';
-import ThemeSwitch from './ThemeSwitch';
-import { useInputContext, useLineageContext } from '../../state';
-import Share from './Share';
-import { GrafanaTheme2 } from '@grafana/data';
-import { useStyles } from '../../theme';
 import { css } from '@emotion/css';
+import { GrafanaTheme2 } from '@grafana/data';
 import { Button } from '@grafana/ui';
+
+import { tryOrReport } from '../../helpers';
+import { fmtCue, fmtJson } from '../../services/format';
+import { useInputContext, useLineageContext } from '../../state';
+import { useStyles } from '../../theme';
+import Examples from './Examples';
+import OpSelector from './OpSelector';
+import Share from './Share';
+import ThemeSwitch from './ThemeSwitch';
 
 const Header = () => {
   const styles = useStyles(getStyles);
