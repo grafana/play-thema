@@ -37,16 +37,12 @@ code {
     margin-bottom: 20px;
     overflow: hidden;
     white-space: nowrap;
-    -webkit-animation: typing 2s steps(180, end);
-    animation: typing 2s steps(180, end);
+    -webkit-animation: typing 1s steps(180, end);
+    animation: typing 1s steps(180, end);
 }
 
 .react-terminal-line:not(.react-terminal-input) {
     margin: 5px auto 15px auto;
-}
-
-.react-terminal-line {
-    white-space: pre-line !important;
 }
 
 @keyframes typing {

@@ -60,10 +60,7 @@ const CodeEditor = ({ value, onChange, isReadOnly, language }: Props) => {
     [editorTheme, theme]
   );
 
-  const opts = useMemo(
-    () => (isReadOnly ? { ...defaultOpts, ...readOnlyOpts } : defaultOpts),
-    [isReadOnly, defaultOpts, readOnlyOpts]
-  );
+  const opts = useMemo(() => (isReadOnly ? { ...defaultOpts, ...readOnlyOpts } : defaultOpts), [isReadOnly]);
 
   return (
     <Editor
