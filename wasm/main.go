@@ -22,14 +22,30 @@ var rt = thema.NewRuntime(cuecontext.New())
 func main() {
 	fmt.Println("Go Web Assembly")
 
-	js.Global().Set("validateAny", js.FuncOf(runValidateAny))
-	js.Global().Set("validateVersion", js.FuncOf(runValidateVersion))
-	js.Global().Set("translateToLatest", js.FuncOf(runTranslateToLatest))
-	js.Global().Set("translateToVersion", js.FuncOf(runTranslateVersion))
-	js.Global().Set("getLineageVersions", js.FuncOf(runGetLineageVersions))
-	js.Global().Set("format", js.FuncOf(runFormat))
+	js.Global().Set("validateAny", js.FuncOf(jsRecover(runValidateAny)))
+	js.Global().Set("validateVersion", js.FuncOf(jsRecover(runValidateVersion)))
+	js.Global().Set("translateToLatest", js.FuncOf(jsRecover(runTranslateToLatest)))
+	js.Global().Set("translateToVersion", js.FuncOf(jsRecover(runTranslateVersion)))
+	js.Global().Set("getLineageVersions", js.FuncOf(jsRecover(runGetLineageVersions)))
+	js.Global().Set("format", js.FuncOf(jsRecover(jsRecover(runFormat))))
 
 	<-make(chan bool)
+}
+
+func jsRecover(fn func(this js.Value, args []js.Value) any) func(this js.Value, args []js.Value) any {
+	return func(this js.Value, args []js.Value) (result any) {
+		defer func() {
+			if r := recover(); r != nil {
+				result = map[string]any{
+					"error": fmt.Sprintf("Internal error: %v", r),
+				}
+			}
+		}()
+
+		result = fn(this, args)
+		js.ValueOf(result)
+		return
+	}
 }
 
 func runValidateVersion(this js.Value, args []js.Value) any {
