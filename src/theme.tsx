@@ -43,18 +43,13 @@ export const ThemeProvider = ({ children }: React.PropsWithChildren) => {
   return <ThemeContext.Provider value={theme}>{children}</ThemeContext.Provider>;
 };
 
-export function useThemeContext() {
+export function useTheme() {
   const context = useContext(ThemeContext);
   if (!context) {
     throw new Error('useThemeContext must be used within the ThemeProvider');
   }
   return context;
 }
-
-export const useTheme = () => {
-  const theme = useThemeContext();
-  return theme;
-};
 
 function getSystemPreferenceTheme() {
   const mediaResult = window.matchMedia('(prefers-color-scheme: dark)');
