@@ -26,16 +26,28 @@ export class ThemeChangedEvent extends BusEventWithPayload<GrafanaTheme2> {
   static type = 'theme-changed';
 }
 
+const getDefaultThemeId = () => {
+  const value = window.localStorage.getItem('theme');
+  if (value) {
+    return value;
+  }
+
+  const mediaResult = window.matchMedia('(prefers-color-scheme: dark)');
+  return mediaResult.matches ? 'dark' : 'light';
+};
+
 export const ThemeProvider = ({ children }: React.PropsWithChildren) => {
-  const [theme, setTheme] = useState<GrafanaTheme2>(getThemeById(''));
+  const [theme, setTheme] = useState<GrafanaTheme2>(getThemeById(getDefaultThemeId()));
 
   useEffect(() => {
     document.body.className = theme.name.toLowerCase();
     const sub = appEvents.subscribe(ThemeChangedEvent, (event) => {
       const newTheme = event.payload;
+      const newThemeName = newTheme.name.toLowerCase();
       setTheme(newTheme);
+      localStorage.setItem('theme', newThemeName);
       // TODO this will break if body has other classes
-      document.body.className = newTheme.name.toLowerCase();
+      document.body.className = newThemeName;
     });
 
     return () => sub.unsubscribe();
