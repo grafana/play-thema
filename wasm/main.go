@@ -27,7 +27,7 @@ func main() {
 	js.Global().Set("translateToLatest", js.FuncOf(jsRecover(runTranslateToLatest)))
 	js.Global().Set("translateToVersion", js.FuncOf(jsRecover(runTranslateVersion)))
 	js.Global().Set("getLineageVersions", js.FuncOf(jsRecover(runGetLineageVersions)))
-	js.Global().Set("format", js.FuncOf(jsRecover(jsRecover(runFormat))))
+	js.Global().Set("format", js.FuncOf(jsRecover(runFormat)))
 
 	<-make(chan bool)
 }
