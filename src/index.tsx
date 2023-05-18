@@ -1,25 +1,25 @@
-import { StrictMode } from 'react';
-import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './components/App';
-import { ThemeProvider } from './theme';
-import { StateProvider } from './state';
+
+import { ReactIntegration } from '@grafana/faro-react';
 import { getWebInstrumentations, initializeFaro } from '@grafana/faro-web-sdk';
 import { TracingInstrumentation } from '@grafana/faro-web-tracing';
-import { ReactIntegration } from '@grafana/faro-react';
+import ReactDOM from 'react-dom/client';
+
+import App from './App';
+import { InputProvider, LineageProvider } from './state';
+import { ThemeProvider } from './theme';
 
 const element = document.getElementById('root');
 if (element) {
   const root: ReactDOM.Root = ReactDOM.createRoot(element);
-
   root.render(
-    <StrictMode>
-      <ThemeProvider>
-        <StateProvider>
+    <ThemeProvider>
+      <InputProvider>
+        <LineageProvider>
           <App />
-        </StateProvider>
-      </ThemeProvider>
-    </StrictMode>
+        </LineageProvider>
+      </InputProvider>
+    </ThemeProvider>
   );
 }
 
@@ -59,6 +59,6 @@ if (process.env.NODE_ENV === 'production') {
       new ReactIntegration(),
     ],
   });
-
+  // eslint-disable-next-line no-console
   console.info('Faro was initialized');
 }

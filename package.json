@@ -3,12 +3,16 @@
   "version": "0.1.0",
   "private": false,
   "license": "Apache-2.0",
-  "homepage": "/play-thema",
+  "homepage": ".",
   "dependencies": {
+    "@emotion/css": "^11.10.8",
+    "@grafana/data": "^9.5.2",
     "@grafana/faro-react": "^1.0.2",
     "@grafana/faro-web-sdk": "^1.0.2",
     "@grafana/faro-web-tracing": "^1.0.2",
+    "@grafana/ui": "^9.5.2",
     "@monaco-editor/react": "4.4.6",
+    "memoize-one": "^6.0.0",
     "monaco-editor": "0.36.1",
     "nanoid": "4.0.1",
     "react": "18.2.0",
@@ -17,7 +21,6 @@
     "react-terminal-ui": "1.0.1"
   },
   "devDependencies": {
-    "@grafana/toolkit": "^9.4.7",
     "@testing-library/jest-dom": "5.14.1",
     "@testing-library/react": "13.0.0",
     "@testing-library/user-event": "13.2.1",
@@ -25,6 +28,7 @@
     "@types/jest": "27.0.1",
     "@types/node": "16.7.13",
     "@types/react-dom": "18.0.0",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
     "prettier": "^2.8.6",
     "typescript": "5.0.2"
   },
@@ -33,12 +37,6 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
   },
   "browserslist": {
     "production": [
@@ -51,5 +49,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "engines": {
+    "node": ">= 18"
   }
 }

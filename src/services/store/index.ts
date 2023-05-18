@@ -1,7 +1,7 @@
 import { State } from '../../state';
 
-const SEPARATOR: string = '*+*+*ThemaPlaygroundSeparator*+*+*';
-const GO_PLAYGROUND_API: string = 'https://play.golang.org';
+const SEPARATOR = '*+*+*ThemaPlaygroundSeparator*+*+*';
+const GO_PLAYGROUND_API = 'https://play.golang.org';
 
 export const storeState = async ({ input, lineage }: Partial<State>): Promise<string> => {
   const snippet: string = (lineage || '').concat(SEPARATOR, input || '');

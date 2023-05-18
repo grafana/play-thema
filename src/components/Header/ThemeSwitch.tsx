@@ -1,5 +1,4 @@
-import React, { CSSProperties, useContext } from 'react';
-import { Theme, ThemeContext } from '../../theme';
+import { Theme, toggleTheme, useTheme } from '../../theme';
 
 const IconMoon = () => (
   <svg viewBox="0 0 24 24" fill="currentColor" height="2.2em" width="2em">
@@ -18,15 +17,15 @@ const IconSun = () => (
 );
 
 interface Props {
-  style: CSSProperties;
+  className: string;
 }
 
-const ThemeSwitch = ({ style }: Props) => {
-  const { theme, toggleTheme } = useContext(ThemeContext);
+const ThemeSwitch = ({ className }: Props) => {
+  const theme = useTheme();
 
   return (
-    <div style={style} onClick={toggleTheme}>
-      {theme === Theme.dark ? <IconSun /> : <IconMoon />}
+    <div className={className} onClick={() => toggleTheme(theme)}>
+      {theme?.name.toLowerCase() === Theme.dark ? <IconSun /> : <IconMoon />}
     </div>
   );
 };

@@ -1,44 +1,35 @@
-import { TranslateToLatest, TranslateToVersion, ValidateAny, ValidateVersion, Versions } from '../../services/wasm';
-import React, { CSSProperties, useContext, useEffect, useState } from 'react';
-import { useDebounce } from '../../hooks';
-import Dropdown from './Dropdown';
-import { StateContext } from '../../state';
+import { css } from '@emotion/css';
+import { GrafanaTheme2, SelectableValue } from '@grafana/data';
+import { Button, Select } from '@grafana/ui';
+import { useEffect, useState } from 'react';
 
-const styles: { [name: string]: CSSProperties } = {
-  opSelector: {
-    gap: '10px',
-    display: 'flex',
-  },
-  dropdown: {
-    margin: '0 0',
-    minWidth: '60px',
-    borderRadius: '20px',
-    textAlign: 'center' as const,
-  },
-  play: {
-    margin: '5px 0',
-    minWidth: '50px',
-    color: '#3d71d9',
-    cursor: 'pointer',
-  },
-};
+import { useDebounce } from '../../hooks';
+import { TranslateToLatest, TranslateToVersion, ValidateAny, ValidateVersion, Versions } from '../../services/wasm';
+import { useInputContext, useLineageContext } from '../../state';
+import { useStyles } from '../../theme';
+
+const options = [
+  { label: 'Validate Any', value: 'validateAny' },
+  { label: 'Validate Version', value: 'validateVersion' },
+  { label: 'Translate to latest', value: 'translateToLatest' },
+  { label: 'Translate to version', value: 'translateToVersion' },
+];
 
 const OpSelector = () => {
-  const { lineage, input } = useContext(StateContext);
-
+  const { input } = useInputContext();
+  const { lineage } = useLineageContext();
   const [version, setVersion] = useState<string>('');
-
-  const ops: { [name: string]: () => void } = {
-    ValidateAny: () => ValidateAny(lineage, input),
-    ValidateVersion: () => ValidateVersion(lineage, input, version),
-    TranslateToLatest: () => TranslateToLatest(lineage, input),
-    TranslateToVersion: () => TranslateToVersion(lineage, input, version),
-  };
-
   const [versions, setVersions] = useState<string[]>([]);
-  const [operation, setOperation] = useState<string>(Object.keys(ops)[0]);
-
+  const [operation, setOperation] = useState<string>();
   const debouncedLineage: string = useDebounce<string>(lineage, 500);
+  const styles = useStyles(getStyles);
+
+  const operations: { [name: string]: () => void } = {
+    validateAny: () => ValidateAny(lineage, input),
+    validateVersion: () => ValidateVersion(lineage, input, version),
+    translateToLatest: () => TranslateToLatest(lineage, input),
+    translateToVersion: () => TranslateToVersion(lineage, input, version),
+  };
 
   useEffect((): void => {
     const versions: string[] = Versions(debouncedLineage);
@@ -47,37 +38,62 @@ const OpSelector = () => {
     setVersion(versions.length > 0 ? versions[0] : '');
   }, [debouncedLineage]);
 
-  const versionDropDisabled = versions.length === 0 || operation === 'ValidateAny' || operation === 'TranslateToLatest';
+  const versionDropDisabled = versions.length === 0 || ['validateAny', 'translateToLatest'].includes(operation || '');
 
-  const play = () => ops[operation]();
+  const runOperation = () => {
+    if (!operation) {
+      return;
+    }
+    operations[operation]();
+  };
 
   return (
-    <div style={styles.opSelector}>
-      <Dropdown
-        id="operation"
-        style={styles.dropdown}
-        options={Object.keys(ops)}
-        onChange={(op: string) => setOperation(op)}
-      />
-      <Dropdown
-        id="version"
-        style={styles.dropdown}
-        disabled={versionDropDisabled}
-        options={versions}
-        onChange={(ver: string) => setVersion(ver)}
-      />
-      <div style={styles.play} onClick={play}>
-        <IconPlay />
-      </div>
+    <div className={styles.container}>
+      <Select options={options} onChange={(op) => setOperation(op.value!)} placeholder={'Select operation'} />
+      <VersionsSelect setVersion={setVersion} disabled={versionDropDisabled} options={versions} version={version} />
+      <Button disabled={!operation} onClick={runOperation}>
+        Run
+      </Button>
     </div>
   );
 };
 
 export default OpSelector;
 
-const IconPlay = () => (
-  <svg viewBox="0 0 24 24" fill="currentColor" height="1.8em" width="3em">
-    <path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z" />
-    <path d="M9 17l8-5-8-5z" />
-  </svg>
-);
+interface VersionsSelectProps {
+  setVersion: (version: string) => void;
+  disabled: boolean;
+  options: string[];
+  version: string;
+}
+const VersionsSelect = ({ setVersion, disabled, options, version }: VersionsSelectProps) => {
+  const onChange = (version: SelectableValue<string>) => {
+    if (version?.value) {
+      setVersion(version.value);
+    }
+  };
+  return (
+    <Select
+      placeholder={'Choose version'}
+      disabled={disabled}
+      options={options.map((v: string) => ({ label: v, value: v }))}
+      onChange={onChange}
+      value={version}
+    />
+  );
+};
+
+const getStyles = (theme: GrafanaTheme2) => {
+  return {
+    container: css`
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      min-width: 450px;
+
+      & > * {
+        margin-right: ${theme.spacing(2)};
+      }
+    `,
+  };
+};
