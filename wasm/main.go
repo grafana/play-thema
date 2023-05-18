@@ -32,6 +32,8 @@ func main() {
 	<-make(chan bool)
 }
 
+// jsRecover wraps a handler function to recover from panics and return an error message in case of a panic.
+// It ensures that the function's result is compatible with js.ValueOf, is called by the browser when a handler is being executed.
 func jsRecover(fn func(this js.Value, args []js.Value) any) func(this js.Value, args []js.Value) any {
 	return func(this js.Value, args []js.Value) (result any) {
 		defer func() {
