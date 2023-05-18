@@ -34,31 +34,28 @@ const CodeEditor = ({ value, onChange, isReadOnly, language }: Props) => {
 
   const handleEditorDidMount = useCallback(
     (editor: monaco.editor.IStandaloneCodeEditor, monaco: Monaco) => {
-      const themeDefinition: monaco.editor.IStandaloneThemeData = theme.isDark
-        ? {
-            base: 'vs-dark',
-            inherit: true,
-            rules: [],
-            colors: {
-              'editor.background': theme.colors.background.secondary,
-            },
-          }
-        : {
-            base: 'vs',
-            inherit: true,
-            rules: [],
-            colors: {
-              'editor.background': '#F4F5F5',
-            },
-          };
-
-      monaco.editor.defineTheme(editorTheme, themeDefinition);
+      monaco.editor.defineTheme('thema-dark', {
+        base: 'vs-dark',
+        inherit: true,
+        rules: [],
+        colors: {
+          'editor.background': '#22252b',
+        },
+      });
+      monaco.editor.defineTheme('thema-light', {
+        base: 'vs',
+        inherit: true,
+        rules: [],
+        colors: {
+          'editor.background': '#F4F5F5',
+        },
+      });
       monaco.editor.setTheme(editorTheme);
 
       editorRef.current = editor;
       monacoRef.current = monaco;
     },
-    [editorTheme, theme]
+    [editorTheme]
   );
 
   const opts = useMemo(() => (isReadOnly ? { ...defaultOpts, ...readOnlyOpts } : defaultOpts), [isReadOnly]);

@@ -1,4 +1,4 @@
-import { Theme, toggleTheme, useThemeContext } from '../../theme';
+import { Theme, toggleTheme, useTheme } from '../../theme';
 
 const IconMoon = () => (
   <svg viewBox="0 0 24 24" fill="currentColor" height="2.2em" width="2em">
@@ -21,7 +21,7 @@ interface Props {
 }
 
 const ThemeSwitch = ({ className }: Props) => {
-  const theme = useThemeContext();
+  const theme = useTheme();
 
   return (
     <div className={className} onClick={() => toggleTheme(theme)}>

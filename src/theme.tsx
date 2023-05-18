@@ -26,16 +26,33 @@ export class ThemeChangedEvent extends BusEventWithPayload<GrafanaTheme2> {
   static type = 'theme-changed';
 }
 
+const getDefaultThemeId = () => {
+  const value = window.localStorage.getItem('theme');
+  if (value) {
+    return value;
+  }
+
+  const mediaResult = window.matchMedia('(prefers-color-scheme: dark)');
+  return mediaResult.matches ? 'dark' : 'light';
+};
+
 export const ThemeProvider = ({ children }: React.PropsWithChildren) => {
-  const [theme, setTheme] = useState<GrafanaTheme2>(getThemeById(''));
+  const [theme, setTheme] = useState<GrafanaTheme2>(getThemeById(getDefaultThemeId()));
 
   useEffect(() => {
-    document.body.className = theme.name.toLowerCase();
+    document.body.classList.add(theme.name.toLowerCase());
     const sub = appEvents.subscribe(ThemeChangedEvent, (event) => {
       const newTheme = event.payload;
+      const newThemeName = newTheme.name.toLowerCase();
       setTheme(newTheme);
-      // TODO this will break if body has other classes
-      document.body.className = newTheme.name.toLowerCase();
+      localStorage.setItem('theme', newThemeName);
+      if (newThemeName === Theme.dark) {
+        document.body.classList.remove(Theme.light);
+        document.body.classList.add(Theme.dark);
+      } else {
+        document.body.classList.remove(Theme.dark);
+        document.body.classList.add(Theme.light);
+      }
     });
 
     return () => sub.unsubscribe();
@@ -43,7 +60,7 @@ export const ThemeProvider = ({ children }: React.PropsWithChildren) => {
   return <ThemeContext.Provider value={theme}>{children}</ThemeContext.Provider>;
 };
 
-export function useThemeContext() {
+export function useTheme() {
   const context = useContext(ThemeContext);
   if (!context) {
     throw new Error('useThemeContext must be used within the ThemeProvider');
@@ -51,18 +68,12 @@ export function useThemeContext() {
   return context;
 }
 
-export const useTheme = () => {
-  const theme = useThemeContext();
-  return theme;
-};
-
 function getSystemPreferenceTheme() {
   const mediaResult = window.matchMedia('(prefers-color-scheme: dark)');
   const id = mediaResult.matches ? 'dark' : 'light';
   return getThemeById(id);
 }
 
-// TODO store selected theme in the local storage
 export function getThemeById(id: string): GrafanaTheme2 {
   const theme = themeRegistry.find((theme) => theme.id === id);
   if (theme) {
