@@ -16,7 +16,7 @@ const Header = () => {
   return (
     <div className={styles.header}>
       <div className={styles.flex}>
-        <img src={'/grafana.svg'} alt={'Grafana logo'} className={styles.logo} />
+        <img src={`${process.env.PUBLIC_URL}/grafana.svg`} alt={'Grafana logo'} className={styles.logo} />
         <h4 className={styles.headerText}>Thema Playground</h4>
       </div>
       <div className={styles.flex}>
