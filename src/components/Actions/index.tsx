@@ -15,8 +15,8 @@ export function Actions() {
         <Share />
         <Format />
         <Examples />
-        <OpSelector />
       </div>
+      <OpSelector />
     </div>
   );
 }

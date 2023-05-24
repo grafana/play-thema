@@ -16,7 +16,7 @@ export function Format() {
   };
 
   return (
-    <Button onClick={formatFn} variant={'secondary'}>
+    <Button onClick={formatFn} variant={'secondary'} fill={'outline'}>
       Format
     </Button>
   );

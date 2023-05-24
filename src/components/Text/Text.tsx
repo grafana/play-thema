@@ -1,6 +1,6 @@
 import { css } from '@emotion/css';
 import { GrafanaTheme2, ThemeTypographyVariant } from '@grafana/data';
-import { useStyles, useStyles2 } from '@grafana/ui';
+import { useStyles2 } from '@grafana/ui';
 import React, { createElement, CSSProperties, useCallback } from 'react';
 
 export interface ThemeTypographyVariantTypes {

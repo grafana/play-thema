@@ -28,12 +28,7 @@ const Examples = () => {
   }, [example, setInput, setLineage]);
 
   return (
-    <Select
-      width={20}
-      options={options}
-      defaultValue={options.find((opt) => opt.value === example)}
-      onChange={(ex) => setExample(ex.value!)}
-    />
+    <Select width={20} options={options} placeholder={'Select example'} onChange={(ex) => setExample(ex.value!)} />
   );
 };
 
