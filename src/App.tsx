@@ -1,11 +1,12 @@
 import { css } from '@emotion/css';
 import { GrafanaTheme2 } from '@grafana/data';
 
+import { Actions } from './components/Actions';
 import { InputEditor } from './components/CodeEditor/InputEditor';
 import { LineageEditor } from './components/CodeEditor/LineageEditor';
 import Column from './components/Column';
 import Console from './components/Console';
-import Header from './components/Header';
+import { Nav } from './components/Nav';
 import { useStyles } from './theme';
 
 const App = () => {
@@ -13,7 +14,8 @@ const App = () => {
 
   return (
     <div className={styles.container}>
-      <Header />
+      <Nav />
+      <Actions />
       <div className={styles.wrapper}>
         <Column title="LINEAGE (CUE)" color="green">
           <LineageEditor />
