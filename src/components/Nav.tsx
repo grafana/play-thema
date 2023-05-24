@@ -3,6 +3,7 @@ import { GrafanaTheme2 } from '@grafana/data';
 
 import { useStyles } from '../theme';
 import ThemeSwitch from './Actions/ThemeSwitch';
+import { H4 } from './Text/TextElements';
 
 export const Nav = () => {
   const styles = useStyles(getStyles);
@@ -10,7 +11,7 @@ export const Nav = () => {
     <nav className={styles.nav}>
       <div className={styles.section}>
         <img src={`${process.env.PUBLIC_URL}/grafana.svg`} alt={'Grafana logo'} className={styles.logo} />
-        <h4 className={styles.headerText}>Thema Playground</h4>
+        <H4>Thema Playground</H4>
       </div>
       <div className={styles.section}>
         <a
@@ -42,13 +43,10 @@ const getStyles = (theme: GrafanaTheme2) => {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 20px;
-      height: 60px;
-      width: 100vw;
-      padding: 10px 40px;
+      width: 100%;
+      padding: ${theme.spacing(2)};
       border: 1px solid ${theme.colors.border.weak};
       border-radius: 2px;
-      color: ${theme.colors.text.primary};
     `,
     section: css`
       display: flex;
