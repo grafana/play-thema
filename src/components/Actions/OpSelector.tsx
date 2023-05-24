@@ -9,10 +9,8 @@ import { useInputContext, useLineageContext } from '../../state';
 import { useStyles } from '../../theme';
 
 const options = [
-  { label: 'Validate Any', value: 'validateAny' },
-  { label: 'Validate Version', value: 'validateVersion' },
-  { label: 'Translate to latest', value: 'translateToLatest' },
-  { label: 'Translate to version', value: 'translateToVersion' },
+  { label: 'Validate against schema', value: 'validate' },
+  { label: 'Translate to schema', value: 'translate' },
 ];
 
 const OpSelector = () => {
@@ -20,7 +18,7 @@ const OpSelector = () => {
   const { lineage } = useLineageContext();
   const [version, setVersion] = useState<string>('');
   const [versions, setVersions] = useState<string[]>([]);
-  const [operation, setOperation] = useState<string>();
+  const [operation, setOperation] = useState<string>('validate');
   const debouncedLineage: string = useDebounce<string>(lineage, 500);
   const styles = useStyles(getStyles);
 
@@ -49,8 +47,20 @@ const OpSelector = () => {
 
   return (
     <div className={styles.container}>
-      <Select options={options} onChange={(op) => setOperation(op.value!)} placeholder={'Select operation'} />
-      <VersionsSelect setVersion={setVersion} disabled={versionDropDisabled} options={versions} version={version} />
+      <Select
+        options={options}
+        onChange={(op) => setOperation(op.value!)}
+        placeholder={'Select operation'}
+        width={40}
+        className={styles.select}
+      />
+      <VersionsSelect
+        setVersion={setVersion}
+        disabled={versionDropDisabled}
+        options={versions}
+        version={version}
+        operation={operation}
+      />
       <Button disabled={!operation} onClick={runOperation}>
         Run
       </Button>
@@ -65,20 +75,32 @@ interface VersionsSelectProps {
   disabled: boolean;
   options: string[];
   version: string;
+  operation: string;
 }
-const VersionsSelect = ({ setVersion, disabled, options, version }: VersionsSelectProps) => {
+const VersionsSelect = ({ setVersion, disabled, options, version, operation }: VersionsSelectProps) => {
+  const styles = useStyles(getStyles);
   const onChange = (version: SelectableValue<string>) => {
     if (version?.value) {
       setVersion(version.value);
     }
   };
+
+  let opts = options.map((v: string) => ({ label: v, value: v }));
+  if (operation === 'validate') {
+    opts = [{ label: 'Any version', value: 'any' }, ...opts];
+  } else if (operation === 'translate') {
+    opts = [{ label: 'Latest version', value: 'latest' }, ...opts];
+  }
+
   return (
     <Select
+      className={styles.versionSelect}
       placeholder={'Choose version'}
       disabled={disabled}
-      options={options.map((v: string) => ({ label: v, value: v }))}
+      options={opts}
       onChange={onChange}
       value={version}
+      width={20}
     />
   );
 };
@@ -88,12 +110,20 @@ const getStyles = (theme: GrafanaTheme2) => {
     container: css`
       display: flex;
       align-items: center;
-      justify-content: flex-end;
-      min-width: 450px;
+      justify-content: space-between;
 
       & > * {
         margin-right: ${theme.spacing(2)};
       }
+    `,
+
+    select: css`
+      max-width: 220px !important;
+      min-width: 220px;
+    `,
+    versionSelect: css`
+      max-width: 140px !important;
+      min-width: 140px;
     `,
   };
 };
