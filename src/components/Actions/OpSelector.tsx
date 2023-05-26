@@ -1,7 +1,7 @@
 import { css } from '@emotion/css';
 import { GrafanaTheme2, SelectableValue } from '@grafana/data';
 import { Button, Select } from '@grafana/ui';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import { useDebounce } from '../../hooks';
 import { TranslateToLatest, TranslateToVersion, ValidateAny, ValidateVersion, Versions } from '../../services/wasm';
@@ -16,17 +16,24 @@ const options = [
 const OpSelector = () => {
   const { input } = useInputContext();
   const { lineage } = useLineageContext();
-  const [version, setVersion] = useState<string>('');
   const [versions, setVersions] = useState<string[]>([]);
   const [operation, setOperation] = useState<string>('validate');
   const debouncedLineage: string = useDebounce<string>(lineage, 500);
+  const [version, setVersion] = useState<string>(Versions(lineage)[0]);
   const styles = useStyles(getStyles);
 
-  const operations: { [name: string]: () => void } = {
-    validateAny: () => ValidateAny(lineage, input),
-    validateVersion: () => ValidateVersion(lineage, input, version),
-    translateToLatest: () => TranslateToLatest(lineage, input),
-    translateToVersion: () => TranslateToVersion(lineage, input, version),
+  const getOperation = () => {
+    if (operation === 'validate') {
+      if (version === 'any') {
+        return () => ValidateAny(lineage, input);
+      }
+      return () => ValidateVersion(lineage, input, version);
+    } else {
+      if (version === 'latest') {
+        return () => TranslateToLatest(lineage, input);
+      }
+      return () => TranslateToVersion(lineage, input, version);
+    }
   };
 
   useEffect((): void => {
@@ -36,13 +43,13 @@ const OpSelector = () => {
     setVersion(versions.length > 0 ? versions[0] : '');
   }, [debouncedLineage]);
 
-  const versionDropDisabled = versions.length === 0 || ['validateAny', 'translateToLatest'].includes(operation || '');
+  const versionDropDisabled = versions.length === 0;
 
   const runOperation = () => {
     if (!operation) {
       return;
     }
-    operations[operation]();
+    getOperation()();
   };
 
   return (
@@ -50,16 +57,18 @@ const OpSelector = () => {
       <Select
         options={options}
         onChange={(op) => setOperation(op.value!)}
+        defaultValue={options[0]}
         placeholder={'Select operation'}
         width={40}
         className={styles.select}
       />
       <VersionsSelect
+        key={operation}
         setVersion={setVersion}
         disabled={versionDropDisabled}
-        options={versions}
         version={version}
         operation={operation}
+        lineage={lineage}
       />
       <Button disabled={!operation} onClick={runOperation}>
         Run
@@ -73,11 +82,11 @@ export default OpSelector;
 interface VersionsSelectProps {
   setVersion: (version: string) => void;
   disabled: boolean;
-  options: string[];
   version: string;
   operation: string;
+  lineage: string;
 }
-const VersionsSelect = ({ setVersion, disabled, options, version, operation }: VersionsSelectProps) => {
+const VersionsSelect = ({ setVersion, disabled, version, operation, lineage }: VersionsSelectProps) => {
   const styles = useStyles(getStyles);
   const onChange = (version: SelectableValue<string>) => {
     if (version?.value) {
@@ -85,19 +94,24 @@ const VersionsSelect = ({ setVersion, disabled, options, version, operation }: V
     }
   };
 
-  let opts = options.map((v: string) => ({ label: v, value: v }));
-  if (operation === 'validate') {
-    opts = [{ label: 'Any version', value: 'any' }, ...opts];
-  } else if (operation === 'translate') {
-    opts = [{ label: 'Latest version', value: 'latest' }, ...opts];
-  }
+  const versionOptions = useMemo(() => {
+    const versions: string[] = Versions(lineage);
+    const opts = versions.map((v: string) => ({ label: v, value: v }));
+    if (operation === 'validate') {
+      return [{ label: 'Any version', value: 'any' }, ...opts];
+    } else if (operation === 'translate') {
+      return [{ label: 'Latest version', value: 'latest' }, ...opts];
+    }
+    return opts;
+  }, [lineage, operation]);
 
   return (
     <Select
       className={styles.versionSelect}
+      defaultValue={versionOptions[0]}
       placeholder={'Choose version'}
       disabled={disabled}
-      options={opts}
+      options={versionOptions}
       onChange={onChange}
       value={version}
       width={20}
