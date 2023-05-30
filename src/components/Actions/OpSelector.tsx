@@ -56,7 +56,10 @@ const OpSelector = () => {
     <div className={styles.container}>
       <Select
         options={options}
-        onChange={(op) => setOperation(op.value!)}
+        onChange={(op) => {
+          setOperation(op.value!);
+          setVersion(getDefaultVersion(op.value!).value);
+        }}
         defaultValue={options[0]}
         placeholder={'Select operation'}
         width={40}
@@ -97,12 +100,7 @@ const VersionsSelect = ({ setVersion, disabled, version, operation, lineage }: V
   const versionOptions = useMemo(() => {
     const versions: string[] = Versions(lineage);
     const opts = versions.map((v: string) => ({ label: v, value: v }));
-    if (operation === 'validate') {
-      return [{ label: 'Any version', value: 'any' }, ...opts];
-    } else if (operation === 'translate') {
-      return [{ label: 'Latest version', value: 'latest' }, ...opts];
-    }
-    return opts;
+    return [getDefaultVersion(operation), ...opts];
   }, [lineage, operation]);
 
   return (
@@ -140,4 +138,10 @@ const getStyles = (theme: GrafanaTheme2) => {
       min-width: 140px;
     `,
   };
+};
+
+const getDefaultVersion = (operation: string) => {
+  return operation === 'validate'
+    ? { label: 'Any version', value: 'any' }
+    : { label: 'Latest version', value: 'latest' };
 };
