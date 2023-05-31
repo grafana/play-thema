@@ -3,6 +3,7 @@ import { GrafanaTheme2 } from '@grafana/data';
 import { PropsWithChildren } from 'react';
 
 import { useStyles } from '../../theme';
+import { H4 } from '../Text/TextElements';
 
 interface ColumnProps {
   title: string;
@@ -14,7 +15,7 @@ const Column = (props: PropsWithChildren<ColumnProps>) => {
 
   return (
     <div className={styles.container}>
-      <h3>{`${props.title}:`}</h3>
+      <H4>{props.title}</H4>
       <div className={styles.contents}>{props.children}</div>
     </div>
   );
@@ -23,14 +24,12 @@ const Column = (props: PropsWithChildren<ColumnProps>) => {
 const getStyles = (theme: GrafanaTheme2) => {
   return {
     container: css`
-      height: 80vh;
-      width: 33vw;
-      padding-top: 20px;
+      width: 33%;
+      margin: ${theme.spacing(2)};
     `,
     contents: css`
       height: 80vh;
-      margin: 1vh 1vw;
-      padding: 10px;
+      margin-top: ${theme.spacing(2)};
       border: rgba(204, 204, 220, 0.07) solid 1px;
       border-radius: 2px;
       background-color: ${theme.colors.background.secondary};

@@ -113,7 +113,6 @@ const getStyles = (theme: GrafanaTheme2) => {
         margin-right: ${theme.spacing(2)};
       }
     `,
-
     select: css`
       max-width: 220px !important;
       min-width: 220px;

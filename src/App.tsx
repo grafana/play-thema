@@ -17,13 +17,13 @@ const App = () => {
       <Nav />
       <Actions />
       <div className={styles.wrapper}>
-        <Column title="LINEAGE (CUE)" color="green">
+        <Column title="CUE Lineage" color="green">
           <LineageEditor />
         </Column>
-        <Column title="INPUT DATA (JSON)" color="green">
+        <Column title="JSON Input" color="green">
           <InputEditor />
         </Column>
-        <Column title="OUTPUT" color="darkblue">
+        <Column title="Output" color="darkblue">
           <Console />
         </Column>
       </div>
@@ -38,7 +38,6 @@ const getStyles = (theme: GrafanaTheme2) => {
       flex-direction: column;
       flex-wrap: wrap;
       background: ${theme.colors.background.primary};
-      text-align: center;
       font-family: Inter, Helvetica, Arial, sans-serif;
       min-height: 100vh;
       height: 100%;
