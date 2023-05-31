@@ -26,6 +26,9 @@ const getStyles = (theme: GrafanaTheme2) => {
     container: css`
       width: 33%;
       margin: ${theme.spacing(2)};
+      h4 {
+        margin-left: ${theme.spacing(1)};
+      }
     `,
     contents: css`
       height: 80vh;

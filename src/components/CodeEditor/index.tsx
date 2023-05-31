@@ -6,6 +6,7 @@ import { Theme, useTheme } from '../../theme';
 
 const defaultOpts: monaco.editor.IStandaloneEditorConstructionOptions = {
   fontSize: 15,
+  lineNumbersMinChars: 2,
   minimap: { enabled: false },
   scrollbar: {
     vertical: 'hidden',
