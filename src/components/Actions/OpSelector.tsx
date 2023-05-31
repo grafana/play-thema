@@ -1,9 +1,8 @@
 import { css } from '@emotion/css';
 import { GrafanaTheme2, SelectableValue } from '@grafana/data';
 import { Button, Select } from '@grafana/ui';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 
-import { useDebounce } from '../../hooks';
 import { TranslateToLatest, TranslateToVersion, ValidateAny, ValidateVersion, Versions } from '../../services/wasm';
 import { useInputContext, useLineageContext } from '../../state';
 import { useStyles } from '../../theme';
@@ -16,9 +15,7 @@ const options = [
 const OpSelector = () => {
   const { input } = useInputContext();
   const { lineage } = useLineageContext();
-  const [versions, setVersions] = useState<string[]>([]);
   const [operation, setOperation] = useState<string>('validate');
-  const debouncedLineage: string = useDebounce<string>(lineage, 500);
   const [version, setVersion] = useState<string>(Versions(lineage)[0]);
   const styles = useStyles(getStyles);
 
@@ -35,15 +32,6 @@ const OpSelector = () => {
       return () => TranslateToVersion(lineage, input, version);
     }
   };
-
-  useEffect((): void => {
-    const versions: string[] = Versions(debouncedLineage);
-
-    setVersions(versions);
-    setVersion(versions.length > 0 ? versions[0] : '');
-  }, [debouncedLineage]);
-
-  const versionDropDisabled = versions.length === 0;
 
   const runOperation = () => {
     if (!operation) {
@@ -68,7 +56,6 @@ const OpSelector = () => {
       <VersionsSelect
         key={operation}
         setVersion={setVersion}
-        disabled={versionDropDisabled}
         version={version}
         operation={operation}
         lineage={lineage}
@@ -84,12 +71,11 @@ export default OpSelector;
 
 interface VersionsSelectProps {
   setVersion: (version: string) => void;
-  disabled: boolean;
   version: string;
   operation: string;
   lineage: string;
 }
-const VersionsSelect = ({ setVersion, disabled, version, operation, lineage }: VersionsSelectProps) => {
+const VersionsSelect = ({ setVersion, version, operation, lineage }: VersionsSelectProps) => {
   const styles = useStyles(getStyles);
   const onChange = (version: SelectableValue<string>) => {
     if (version?.value) {
@@ -108,7 +94,6 @@ const VersionsSelect = ({ setVersion, disabled, version, operation, lineage }: V
       className={styles.versionSelect}
       defaultValue={versionOptions[0]}
       placeholder={'Choose version'}
-      disabled={disabled}
       options={versionOptions}
       onChange={onChange}
       value={version}
