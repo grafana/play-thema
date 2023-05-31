@@ -17,11 +17,11 @@ const App = () => {
       <Nav />
       <Actions />
       <div className={styles.wrapper}>
-        <Column title="CUE Lineage" color="green">
-          <LineageEditor />
-        </Column>
         <Column title="JSON Input" color="green">
           <InputEditor />
+        </Column>
+        <Column title="CUE Lineage" color="green">
+          <LineageEditor />
         </Column>
         <Column title="Output" color="darkblue">
           <Console />
