@@ -33,6 +33,7 @@ const getStyles = (theme: GrafanaTheme2) => {
     contents: css`
       height: 80vh;
       margin-top: ${theme.spacing(2)};
+      padding-top: ${theme.spacing(1)};
       border: rgba(204, 204, 220, 0.07) solid 1px;
       border-radius: 2px;
       background-color: ${theme.colors.background.secondary};
