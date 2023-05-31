@@ -15,8 +15,10 @@ const Column = (props: PropsWithChildren<ColumnProps>) => {
 
   return (
     <div className={styles.container}>
-      <H4>{props.title}</H4>
-      <div className={styles.contents}>{props.children}</div>
+      <div className={styles.contents}>
+        <H4>{props.title}</H4>
+        {props.children}
+      </div>
     </div>
   );
 };
@@ -27,16 +29,17 @@ const getStyles = (theme: GrafanaTheme2) => {
       width: 33%;
       margin: ${theme.spacing(2)};
       h4 {
-        margin-left: ${theme.spacing(1)};
+        margin: ${theme.spacing(0, 0, 2, 2)};
       }
     `,
     contents: css`
       height: 80vh;
-      margin-top: ${theme.spacing(2)};
-      padding-top: ${theme.spacing(1)};
+      padding-top: ${theme.spacing(2)};
       border: rgba(204, 204, 220, 0.07) solid 1px;
       border-radius: 2px;
       background-color: ${theme.colors.background.secondary};
+      display: flex;
+      flex-direction: column;
     `,
   };
 };

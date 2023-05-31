@@ -51,7 +51,7 @@ export const getStyles = (theme: GrafanaTheme2) => {
   return {
     container: css`
       width: 33%;
-      margin: ${theme.spacing(7, 2, 2, 2)};
+      margin: ${theme.spacing(2)};
     `,
     header: css`
       font-size: ${theme.typography.h4.fontSize} !important;
