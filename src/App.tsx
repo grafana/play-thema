@@ -7,6 +7,7 @@ import { LineageEditor } from './components/CodeEditor/LineageEditor';
 import Column from './components/Column';
 import Console from './components/Console';
 import { Nav } from './components/Nav';
+import { Output } from './components/Output';
 import { useStyles } from './theme';
 
 const App = () => {
@@ -23,9 +24,7 @@ const App = () => {
         <Column title="CUE Lineage" color="green">
           <LineageEditor />
         </Column>
-        <Column title="Output" color="darkblue">
-          <Console />
-        </Column>
+        <Output />
       </div>
     </div>
   );
