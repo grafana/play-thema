@@ -1,5 +1,5 @@
+import { SelectableValue } from '@grafana/data';
 import { Select } from '@grafana/ui';
-import { useEffect, useState } from 'react';
 
 import { useInputContext, useLineageContext } from '../../state';
 import { basic, lenses, multi } from './_examples';
@@ -19,17 +19,14 @@ const options = [
 const Examples = () => {
   const { setLineage } = useLineageContext();
   const { setInput } = useInputContext();
-  const [example, setExample] = useState<string>(Object.keys(examples)[0]);
 
-  useEffect(() => {
-    const { lineage, input } = examples[example];
+  const onExampleChange = (example: SelectableValue) => {
+    const { lineage, input } = examples[example.value];
     setInput(input);
     setLineage(lineage);
-  }, [example, setInput, setLineage]);
+  };
 
-  return (
-    <Select width={20} options={options} placeholder={'Select example'} onChange={(ex) => setExample(ex.value!)} />
-  );
+  return <Select width={20} options={options} placeholder={'Select example'} onChange={onExampleChange} />;
 };
 
 export default Examples;
