@@ -60,7 +60,7 @@ export const TranslateToLatest = (lineage: string, input: string): void => {
 
 export const TranslateToVersion = (lineage: string, input: string, version: string): void => {
   // @ts-ignore
-  const res = translateToLatest(lineage, input);
+  const res = translateToVersion(lineage, input, version);
   if (res.error !== '') {
     publish({ stderr: `'TranslateToVersion' failed: ${res.error}` });
     return;
