@@ -16,7 +16,7 @@ export const Output = () => {
   const [input, setInput] = useState<ConsoleInput>({ stdout: '', stderr: '' });
 
   useEffect(() => {
-    subscribe(({ stderr, stdout }) => {
+    const { unsubscribe } = subscribe(({ stderr, stdout }) => {
       if (stderr) {
         setInput({ stderr });
       }
@@ -24,6 +24,10 @@ export const Output = () => {
         setInput({ stdout });
       }
     });
+
+    return () => {
+      unsubscribe();
+    };
   }, []);
 
   return (

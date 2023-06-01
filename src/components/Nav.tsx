@@ -46,7 +46,6 @@ const getStyles = (theme: GrafanaTheme2) => {
       width: 100%;
       padding: ${theme.spacing(2)};
       border: 1px solid ${theme.colors.border.weak};
-      border-radius: 2px;
     `,
     section: css`
       display: flex;
