@@ -1,7 +1,7 @@
 import { css } from '@emotion/css';
 import { GrafanaTheme2, SelectableValue } from '@grafana/data';
 import { Button, Select } from '@grafana/ui';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import { TranslateToLatest, TranslateToVersion, ValidateAny, ValidateVersion, Versions } from '../../services/wasm';
 import { useInputContext, useLineageContext } from '../../state';
@@ -16,8 +16,12 @@ const OpSelector = () => {
   const { input } = useInputContext();
   const { lineage } = useLineageContext();
   const [operation, setOperation] = useState<string>('validate');
-  const [version, setVersion] = useState<string>(Versions(lineage)[0]);
+  const [version, setVersion] = useState<string>(getDefaultVersion(operation).value);
   const styles = useStyles(getStyles);
+
+  useEffect(() => {
+    setVersion(getDefaultVersion(operation).value);
+  }, [lineage, operation]);
 
   const getOperation = () => {
     if (operation === 'validate') {
@@ -46,7 +50,6 @@ const OpSelector = () => {
         options={options}
         onChange={(op) => {
           setOperation(op.value!);
-          setVersion(getDefaultVersion(op.value!).value);
         }}
         defaultValue={options[0]}
         placeholder={'Select operation'}

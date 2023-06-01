@@ -1,21 +1,48 @@
-import { css } from '@emotion/css';
+import { css, keyframes } from '@emotion/css';
 import { GrafanaTheme2 } from '@grafana/data';
 import { Card } from '@grafana/ui';
+import { useEffect, useState } from 'react';
 
+import { subscribe } from '../services/terminal';
 import { useStyles } from '../theme';
+
+interface ConsoleInput {
+  stdout?: string;
+  stderr?: string;
+}
 
 export const Output = () => {
   const styles = useStyles(getStyles);
+  const [input, setInput] = useState<ConsoleInput>({ stdout: '', stderr: '' });
+
+  useEffect(() => {
+    subscribe(({ stderr, stdout }) => {
+      if (stderr) {
+        setInput({ stderr });
+      }
+      if (stdout) {
+        setInput({ stdout });
+      }
+    });
+  }, []);
 
   return (
     <div className={styles.container}>
       <Card>
         <Card.Heading className={styles.header}>Output</Card.Heading>
-        <Card.Description>No output yet. Try loading an example, then validating or translating it.</Card.Description>
+        <Card.Description>
+          {input.stdout ? (
+            <span className={styles.text}>{input.stdout}</span>
+          ) : (
+            'No output yet. Try loading an example, then validating or translating it.'
+          )}
+        </Card.Description>
       </Card>
       <Card>
         <Card.Heading className={styles.header}>Errors</Card.Heading>
-        <Card.Description>No errors.</Card.Description>
+        <Card.Description>
+          {input.stderr ? <span className={styles.error}>{input.stderr}</span> : 'No errors.'}
+        </Card.Description>
       </Card>
       <Card>
         <Card.Heading className={styles.header}>What is Thema?</Card.Heading>
@@ -61,6 +88,12 @@ export const getStyles = (theme: GrafanaTheme2) => {
       margin-top: ${theme.spacing(2)};
       text-decoration: none;
       color: ${theme.colors.text.link};
+    `,
+    text: css`
+      color: ${theme.colors.text.primary};
+    `,
+    error: css`
+      color: ${theme.colors.warning.main};
     `,
   };
 };
