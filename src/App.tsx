@@ -5,7 +5,6 @@ import { Actions } from './components/Actions';
 import { InputEditor } from './components/CodeEditor/InputEditor';
 import { LineageEditor } from './components/CodeEditor/LineageEditor';
 import Column from './components/Column';
-import Console from './components/Console';
 import { Nav } from './components/Nav';
 import { Output } from './components/Output';
 import { useStyles } from './theme';
@@ -37,7 +36,6 @@ const getStyles = (theme: GrafanaTheme2) => {
       flex-direction: column;
       flex-wrap: wrap;
       background: ${theme.colors.background.primary};
-      font-family: Inter, Helvetica, Arial, sans-serif;
       min-height: 100vh;
       height: 100%;
     `,
