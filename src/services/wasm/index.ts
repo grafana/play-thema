@@ -22,7 +22,6 @@ export const Versions = (lineage: string): string[] => {
   // @ts-ignore
   const res = getLineageVersions(lineage);
   if (res.error !== '') {
-    publish({ stderr: `Lineage: ${res.error}` });
     return [];
   }
   publish({ stderr: '' });
