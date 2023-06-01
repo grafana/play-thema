@@ -91,9 +91,11 @@ export const getStyles = (theme: GrafanaTheme2) => {
     `,
     text: css`
       color: ${theme.colors.text.primary};
+      white-space: pre-line;
     `,
     error: css`
       color: ${theme.colors.warning.main};
+      white-space: pre-line;
     `,
   };
 };
