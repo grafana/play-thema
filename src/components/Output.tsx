@@ -1,4 +1,4 @@
-import { css, keyframes } from '@emotion/css';
+import { css } from '@emotion/css';
 import { GrafanaTheme2 } from '@grafana/data';
 import { Card } from '@grafana/ui';
 import { useEffect, useState } from 'react';
