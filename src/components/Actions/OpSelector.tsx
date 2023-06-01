@@ -63,8 +63,8 @@ const OpSelector = () => {
         operation={operation}
         lineage={lineage}
       />
-      <Button disabled={!operation} onClick={runOperation}>
-        Run
+      <Button disabled={!operation} onClick={runOperation} icon={'play'}>
+        {operation === 'validate' ? 'Validate' : 'Translate'}
       </Button>
     </div>
   );
