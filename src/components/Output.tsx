@@ -48,32 +48,34 @@ export const Output = () => {
           {input.stderr ? <span className={styles.error}>{input.stderr}</span> : 'No errors.'}
         </Card.Description>
       </Card>
-      <Card>
-        <Card.Heading className={styles.header}>What is Thema?</Card.Heading>
-        <Card.Description>
-          Thema is a system for writing schemas. Much like JSON Schema or OpenAPI, it is general-purpose and its most
-          obvious application is as an IDL. However, those systems treat changing schemas as out of scope: a single
-          version of a schema for some object is the atomic unit, and versioning is left to opaque strings in external
-          systems like git or HTTP. Thema, by contrast, makes schema change a first-class system property: the atomic
-          unit is the set of schema for some object, iteratively appended to over time as requirements evolve.
-          <a
-            className={styles.link}
-            href={'https://github.com/grafana/thema#thema'}
-            target={'_blank'}
-            rel={'noreferrer noopener'}
-          >
-            Documentation
-          </a>
-          <a
-            className={styles.link}
-            href={'https://github.com/grafana/play-thema'}
-            target={'_blank'}
-            rel={'noreferrer noopener'}
-          >
-            Thema on Github
-          </a>
-        </Card.Description>
-      </Card>
+      {!input.stderr && !input.stdout && (
+        <Card>
+          <Card.Heading className={styles.header}>What is Thema?</Card.Heading>
+          <Card.Description>
+            Thema is a system for writing schemas. Much like JSON Schema or OpenAPI, it is general-purpose and its most
+            obvious application is as an IDL. However, those systems treat changing schemas as out of scope: a single
+            version of a schema for some object is the atomic unit, and versioning is left to opaque strings in external
+            systems like git or HTTP. Thema, by contrast, makes schema change a first-class system property: the atomic
+            unit is the set of schema for some object, iteratively appended to over time as requirements evolve.
+            <a
+              className={styles.link}
+              href={'https://github.com/grafana/thema#thema'}
+              target={'_blank'}
+              rel={'noreferrer noopener'}
+            >
+              Documentation
+            </a>
+            <a
+              className={styles.link}
+              href={'https://github.com/grafana/play-thema'}
+              target={'_blank'}
+              rel={'noreferrer noopener'}
+            >
+              Thema on Github
+            </a>
+          </Card.Description>
+        </Card>
+      )}
     </div>
   );
 };
@@ -82,7 +84,7 @@ export const getStyles = (theme: GrafanaTheme2) => {
   return {
     container: css`
       width: 33%;
-      margin: ${theme.spacing(0, 2, 2)};
+      margin: ${theme.spacing(0, 0, 2)};
     `,
     header: css`
       font-size: ${theme.typography.h4.fontSize} !important;

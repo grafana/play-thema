@@ -27,7 +27,7 @@ const getStyles = (theme: GrafanaTheme2) => {
   return {
     container: css`
       width: 33%;
-      margin: ${theme.spacing(0, 2, 2)};
+      margin: ${theme.spacing(0, 0, 2)};
       h4 {
         margin: ${theme.spacing(0, 0, 2, 2)};
       }

@@ -44,8 +44,9 @@ const getStyles = (theme: GrafanaTheme2) => {
       align-items: center;
       justify-content: space-between;
       width: 100%;
-      padding: ${theme.spacing(2)};
+      padding: ${theme.spacing(0, 2)};
       border: 1px solid ${theme.colors.border.weak};
+      height: 40px;
     `,
     section: css`
       display: flex;
