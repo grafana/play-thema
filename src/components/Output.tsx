@@ -100,7 +100,7 @@ export const getStyles = (theme: GrafanaTheme2) => {
       white-space: pre-line;
     `,
     error: css`
-      color: ${theme.colors.warning.main};
+      color: ${theme.colors.warning.text};
       white-space: pre-line;
     `,
   };
