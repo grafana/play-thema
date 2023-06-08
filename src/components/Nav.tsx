@@ -1,31 +1,19 @@
 import { css } from '@emotion/css';
 import { GrafanaTheme2 } from '@grafana/data';
-import { Button } from '@grafana/ui';
 
-import { tryOrReport } from '../../helpers';
-import { fmtCue, fmtJson } from '../../services/format';
-import { useInputContext, useLineageContext } from '../../state';
-import { useStyles } from '../../theme';
-import Examples from './Examples';
-import OpSelector from './OpSelector';
-import Share from './Share';
-import ThemeSwitch from './ThemeSwitch';
+import { useStyles } from '../theme';
+import ThemeSwitch from './Actions/ThemeSwitch';
+import { H4 } from './Text/TextElements';
 
-const Header = () => {
+export const Nav = () => {
   const styles = useStyles(getStyles);
   return (
-    <div className={styles.header}>
-      <div className={styles.flex}>
+    <nav className={styles.nav}>
+      <div className={styles.section}>
         <img src={`${process.env.PUBLIC_URL}/grafana.svg`} alt={'Grafana logo'} className={styles.logo} />
-        <h4 className={styles.headerText}>Thema Playground</h4>
+        <H4>Thema Playground</H4>
       </div>
-      <div className={styles.flex}>
-        <div className={styles.flex}>
-          <Examples />
-          <Share />
-          <FormatButton />
-          <OpSelector />
-        </div>
+      <div className={styles.section}>
         <a
           className={styles.icon}
           href={'https://github.com/grafana/play-thema'}
@@ -45,31 +33,22 @@ const Header = () => {
         </a>
         <ThemeSwitch className={styles.themeSwitch} />
       </div>
-    </div>
-  );
-};
-
-const FormatButton = () => {
-  const { input, setInput } = useInputContext();
-  const { lineage, setLineage } = useLineageContext();
-
-  const formatFn = () => {
-    tryOrReport(() => {
-      setInput(fmtJson(input));
-      setLineage(fmtCue(lineage));
-    }, true);
-  };
-
-  return (
-    <Button onClick={formatFn} variant={'secondary'}>
-      Format
-    </Button>
+    </nav>
   );
 };
 
 const getStyles = (theme: GrafanaTheme2) => {
   return {
-    flex: css`
+    nav: css`
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: ${theme.spacing(0, 2)};
+      border: 1px solid ${theme.colors.border.weak};
+      height: 40px;
+    `,
+    section: css`
       display: flex;
       align-items: center;
 
@@ -77,24 +56,8 @@ const getStyles = (theme: GrafanaTheme2) => {
         margin-right: ${theme.spacing(2)};
       }
     `,
-    header: css`
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-      height: 60px;
-      width: 100vw;
-      padding: 10px 40px;
-      border: 1px solid ${theme.colors.border.weak};
-      border-radius: 2px;
-      color: ${theme.colors.text.primary};
-    `,
     headerText: css`
       margin-bottom: 0;
-    `,
-    themeSwitch: css`
-      color: ${theme.colors.text.primary};
-      cursor: pointer;
     `,
     logo: css`
       width: 20px;
@@ -104,6 +67,9 @@ const getStyles = (theme: GrafanaTheme2) => {
     icon: css`
       color: ${theme.colors.text.primary};
     `,
+    themeSwitch: css`
+      color: ${theme.colors.text.primary};
+      cursor: pointer;
+    `,
   };
 };
-export default Header;

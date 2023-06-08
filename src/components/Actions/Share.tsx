@@ -16,7 +16,9 @@ const Share = () => {
   const shareUrl = (share?: string) => (share !== '' ? window.location.href.split('#')[0].concat(`#${share}`) : '');
 
   useEffect(() => {
-    if (hashId() === '') {return;}
+    if (hashId() === '') {
+      return;
+    }
 
     fetchState(hashId())
       .then(({ input, lineage }) => {
@@ -37,7 +39,7 @@ const Share = () => {
 
   return (
     <>
-      <Button ref={buttonRef} onClick={shareFn} variant={'secondary'}>
+      <Button ref={buttonRef} onClick={shareFn} variant={'secondary'} fill={'outline'}>
         Share
       </Button>
       {showCopySuccess && (
