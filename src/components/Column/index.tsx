@@ -3,6 +3,7 @@ import { GrafanaTheme2 } from '@grafana/data';
 import { PropsWithChildren } from 'react';
 
 import { useStyles } from '../../theme';
+import { FileUpload } from '../FileUpload';
 import { H4 } from '../Text/TextElements';
 
 interface ColumnProps {
@@ -16,7 +17,10 @@ const Column = (props: PropsWithChildren<ColumnProps>) => {
   return (
     <div className={styles.container}>
       <div className={styles.contents}>
-        <H4>{props.title}</H4>
+        <div className={styles.row}>
+          <H4>{props.title}</H4>
+          <FileUpload />
+        </div>
         {props.children}
       </div>
     </div>
@@ -40,6 +44,11 @@ const getStyles = (theme: GrafanaTheme2) => {
       background-color: ${theme.colors.background.secondary};
       display: flex;
       flex-direction: column;
+    `,
+    row: css`
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     `,
   };
 };
