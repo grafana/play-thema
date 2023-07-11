@@ -1,5 +1,6 @@
 import { css, cx } from '@emotion/css';
 import { GrafanaTheme2 } from '@grafana/data';
+import { IconButton } from '@grafana/ui';
 import { ChangeEvent, DragEvent, FC, ReactNode, useCallback, useRef, useState } from 'react';
 
 import { useStyles } from '../theme';
@@ -25,7 +26,7 @@ export const FileUpload: FC<FileUploadProps> = ({ children, title, onInputRead, 
       const extension = file.name.split('.').pop() || ''; // Get file extension
 
       // Check if the file has an accepted extension
-      if (!acceptedExtensions.includes('.' + extension)) {
+      if (!acceptedExtensions.includes(extension)) {
         alert('Unsupported file type');
         return;
       }
@@ -74,7 +75,10 @@ export const FileUpload: FC<FileUploadProps> = ({ children, title, onInputRead, 
       onDragOver={onDragOver}
       onDragLeave={onDragLeave}
     >
-      <H4>{title}</H4>
+      <div className={styles.row}>
+        <H4>{title}</H4>
+        <IconButton name={'upload'} onClick={() => inputRef.current?.click()} tooltip={'Upload file'} />
+      </div>
       {children}
       <input ref={inputRef} type={'file'} className={styles.fileInput} onChange={onFileChange} accept={accept} />
     </div>
@@ -82,6 +86,12 @@ export const FileUpload: FC<FileUploadProps> = ({ children, title, onInputRead, 
 };
 
 const getStyles = (theme: GrafanaTheme2) => ({
+  row: css`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: ${theme.spacing(0, 1, 2, 2)};
+  `,
   fileInput: css`
     display: none;
   `,

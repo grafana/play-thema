@@ -42,7 +42,7 @@ const getStyles = (theme: GrafanaTheme2) => {
     wrapper: css`
       display: flex;
 
-      * > div {
+      & > div {
         margin-right: ${theme.spacing(1)};
       }
     `,
