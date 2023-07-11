@@ -1,7 +1,7 @@
 import { css, cx } from '@emotion/css';
 import { GrafanaTheme2 } from '@grafana/data';
 import { IconButton } from '@grafana/ui';
-import { ChangeEvent, DragEvent, FC, ReactNode, useCallback, useRef, useState } from 'react';
+import { ChangeEvent, DragEvent, ReactNode, useCallback, useRef, useState } from 'react';
 
 import { useStyles } from '../theme';
 import { H4 } from './Text/TextElements';
@@ -13,7 +13,7 @@ interface FileUploadProps {
   accept: string;
 }
 
-export const FileUpload: FC<FileUploadProps> = ({ children, title, onInputRead, accept }) => {
+export const FileUpload = ({ children, title, onInputRead, accept }: FileUploadProps) => {
   const [isDragOver, setIsDragOver] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const styles = useStyles(getStyles);
